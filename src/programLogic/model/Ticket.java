@@ -10,9 +10,9 @@ public class Ticket {
     String longDescription;
 
 
-    public Ticket(int id, Account userName, AdminAccount assignedTo, String shortDescription, String longDescription) {
+    public Ticket(int id, Account user, AdminAccount assignedTo, String shortDescription, String longDescription) {
         this.id =id;
-        this.userName =userName;
+        this.user =user;
         this.assignedTo =assignedTo;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
