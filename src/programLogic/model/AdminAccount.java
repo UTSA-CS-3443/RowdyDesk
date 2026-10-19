@@ -1,8 +1,9 @@
 package programLogic.model;
 
-public class AdminAccount extends Account{
+public class AdminAccount extends Account {
 
-    public AdminAccount(String name, int id){
-        super(name, id);
+    public AdminAccount(String userName, String displayName, int id, String password) {
+        super(userName, displayName, id, password);
     }
+
 }
