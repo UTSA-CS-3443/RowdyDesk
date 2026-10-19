@@ -30,8 +30,7 @@ public class AccountManager {
     }
 
     private void saveAccounts(String path) {
-        try {
-            FileWriter fw = new FileWriter(path);
+        try(FileWriter fw = new FileWriter(path);) {
             for(Account acc : allAcounts) {
                 fw.write(String.format("%s,%s,%s,%d,%s\n",
                         acc instanceof AdminAccount ? "admin" : "user",
@@ -69,5 +68,24 @@ public class AccountManager {
         allAcounts.add(new Account(userName, displayName, allAcounts.size(), password));
         saveAccounts("programLogic/data/user_accounts.csv");
     }
-    
+
+    public Account findAccount(int id) {
+
+        for(Account acc : allAcounts) {
+            if(acc.getId()==id) {
+                return acc;
+            }
+        }
+        return null;
+    }
+
+    public AdminAccount findAdminAccount(int id) {
+
+        for(Account acc : allAcounts) {
+            if(acc.getId()==id && acc instanceof AdminAccount) {
+                return (AdminAccount)acc;
+            }
+        }
+        return null;
+    }
 }

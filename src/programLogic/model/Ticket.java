@@ -1,5 +1,7 @@
 package programLogic.model;
 
+import java.util.Date;
+
 public class Ticket {
 
     private final int id;
@@ -8,20 +10,26 @@ public class Ticket {
     AdminAccount assignedTo;
     String shortDescription;
     String longDescription;
+    private final Date timeCreated;
 
-
-    public Ticket(int id, Account user, AdminAccount assignedTo, String shortDescription, String longDescription) {
+    public Ticket(int id, Account user, AdminAccount assignedTo, String shortDescription, String longDescription, Status ticketStatus, Date timeCreated) {
         this.id =id;
         this.user =user;
         this.assignedTo =assignedTo;
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
-
-        ticketStatus = Status.PENDING;
+        this.ticketStatus = ticketStatus;
+        this.timeCreated = timeCreated;
     }
+
+
 
     public int getId() {
         return id;
+    }
+
+    public Date getTimeCreated() {
+        return timeCreated;
     }
 
     public Status getTicketStatus() {
@@ -31,5 +39,6 @@ public class Ticket {
     public void setTicketStatus(Status ticketStatus) {
         this.ticketStatus = ticketStatus;
     }
+
 
 }
