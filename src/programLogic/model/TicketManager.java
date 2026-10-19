@@ -121,7 +121,6 @@ public class TicketManager {
     }
 
     public Ticket lineToTicket(String line) {
-        //Todo split the line by the comma and then createTicket()
         String[] splitLine = line.split("(?<!\\\\),");
         int ticketId = Integer.parseInt(splitLine[0]);
         Account user = accountManager.findAccount(Integer.parseInt(splitLine[1])); // make this the Account finder based off the name
@@ -135,7 +134,6 @@ public class TicketManager {
     }
 
     public String ticketToLine(Ticket ticket) {
-        //Todo create string based on ticket
 
         return String.format("%d,%d,%d,%s,%s,%d,%d\n",
                 ticket.getId(),
