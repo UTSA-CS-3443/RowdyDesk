@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class AccountManager {
 
     ArrayList<Account> allAcounts;
+    String accountDataPath = "src/programLogic/data/user_accounts.csv";
 
     public AccountManager() {
         allAcounts = new ArrayList<Account>();
@@ -29,8 +30,8 @@ public class AccountManager {
         throw new Exception("User not found.");
     }
 
-    private void saveAccounts(String path) {
-        try(FileWriter fw = new FileWriter(path);) {
+    private void saveAccounts() {
+        try(FileWriter fw = new FileWriter(accountDataPath);) {
             for(Account acc : allAcounts) {
                 fw.write(String.format("%s,%s,%s,%d,%s\n",
                         acc instanceof AdminAccount ? "admin" : "user",
@@ -45,10 +46,10 @@ public class AccountManager {
         }
     }
 
-    public void loadAccounts(String filename) throws Exception {
+    public void loadAccounts() throws Exception {
         try {
-            Scanner f = new Scanner(new File(filename));
-            while(f.hasNext()) {
+            Scanner f = new Scanner(new File(accountDataPath));
+            while(f.hasNextLine()) {
                 String[] data = f.nextLine().split(",");
                 if(data.length == 0) continue;
                 if(data[0].equals("admin")) {
@@ -66,7 +67,7 @@ public class AccountManager {
 
     public void register(String userName, String displayName, String password) {
         allAcounts.add(new Account(userName, displayName, allAcounts.size(), password));
-        saveAccounts("programLogic/data/user_accounts.csv");
+        saveAccounts();
     }
 
     public Account findAccount(int id) {

@@ -14,8 +14,8 @@ public class TicketManager {
 
     AccountManager accountManager;
 
-    String activeTicketsDataPath = "programLogic/data/ticketsData.csv";
-    String archivedTicketsDataPath = "programLogic/data/archivedTicketsData.csv";
+    String activeTicketsDataPath = "src/programLogic/data/ticketsData.csv";
+    String archivedTicketsDataPath = "src/programLogic/data/archivedTicketsData.csv";
 
     private int currentIDNumber;
 
