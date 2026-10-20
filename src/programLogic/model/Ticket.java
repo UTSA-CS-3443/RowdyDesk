@@ -23,6 +23,37 @@ public class Ticket {
     }
 
 
+    public void setUser(Account user) {
+        this.user = user;
+    }
+
+    public void setAssignedTo(AdminAccount assignedTo) {
+        this.assignedTo = assignedTo;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
+    }
+
+    public Account getUser() {
+        return user;
+    }
+
+    public AdminAccount getAssignedTo() {
+        return assignedTo;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public String getLongDescription() {
+        return longDescription;
+    }
 
     public int getId() {
         return id;

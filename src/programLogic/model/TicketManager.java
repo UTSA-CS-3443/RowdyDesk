@@ -153,5 +153,13 @@ public class TicketManager {
         saveDateToFile();
     }
 
+    public int getActiveTicketCount() {
+        return activeTickets.size();
+    }
+
+    public ArrayList<Ticket> getAssignedTickets(AdminAccount admin) {
+        //TODO Make this loop thru and add shi to the arraylist and then return it
+        return new ArrayList<>();
+    }
 
  }
