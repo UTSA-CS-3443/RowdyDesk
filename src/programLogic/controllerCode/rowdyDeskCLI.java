@@ -41,7 +41,7 @@ public class rowdyDeskCLI {
 
                 loggedInAccount = accountManager.login(username,password);
 
-                System.out.println("Successfully logged in! Welcome "+username);
+                System.out.println("Successfully logged in! Hello "+username+"!");
                 loggedIn = true;
 
             } catch (Exception e) {
@@ -53,13 +53,14 @@ public class rowdyDeskCLI {
 
         if(loggedInAccount instanceof AdminAccount) {
             while (true) {
-                System.out.println("Welcome to RowdyDeskAdmin! please select an option\n" +
-                        "[1] view all active tickets" +
-                        "[2] view tickets assigned to you" +
-                        "[3] create new ticket" +
-                        "[4] edit your account info" +
-                        "[5] add new account" +
-                        "[6] quit");
+                System.out.println("""
+                        Welcome to RowdyDeskAdmin! please select an option
+                        [1] view all active tickets
+                        [2] view tickets assigned to you
+                        [3] create new ticket
+                        [4] edit your account info
+                        [5] add new account
+                        [6] quit""");
 
                 userChoice = scnr.next();
 
@@ -88,11 +89,13 @@ public class rowdyDeskCLI {
             }
         } else {
             while (true) {
-                System.out.println("Welcome to RowdyDesk! please select an option\n" +
-                        "[1] view your tickets" +
-                        "[2] create new ticket" +
-                        "[3] edit your account info" +
-                        "[4] quit");
+                System.out.println("""
+                        Welcome to RowdyDesk! please select an option
+                        [1] view your tickets
+                        [2] create new ticket
+                        [3] edit your account info
+                        [4] quit
+                        """);
 
                 userChoice = scnr.next();
 
