@@ -7,19 +7,19 @@ import java.util.Scanner;
 public class rowdyDeskCLI {
 
     public static void main(String[] args) {
-        AccountManager accountManager = new AccountManager();
-        TicketManager ticketManager = new TicketManager(accountManager);
         Scanner scnr = new Scanner(System.in);
+        AccountManager accountManager = null;
+        TicketManager ticketManager = null;
 
         try {
-            accountManager.loadAccounts();
+            accountManager = AccountManager.getInstance();
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
         }
 
         try {
-            ticketManager.initializeData();
+            ticketManager = TicketManager.getInstance();
         }
         catch(Exception e) {
             System.out.println(e.getMessage());
@@ -28,8 +28,6 @@ public class rowdyDeskCLI {
         boolean loggedIn = false;
         String username;
         String password;
-
-        System.out.println(accountManager.findAccount(1234).getUserName());
 
         Account loggedInAccount = null;
         while(!loggedIn) {
@@ -65,7 +63,8 @@ public class rowdyDeskCLI {
                 userChoice = scnr.next();
 
                 if (userChoice.equals("1")) {
-                    //loop thru all tickets and print out
+                    System.out.println(adminViewAllTicketsController.viewAllTickets(ticketManager));
+
                 } else if (userChoice.equals("2")) {
                     //get list of tickets assign to logged in user
                     // loop thru them and print out

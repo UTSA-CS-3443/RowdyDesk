@@ -12,8 +12,18 @@ public class AccountManager {
     ArrayList<Account> allAcounts;
     String accountDataPath = "src/programLogic/data/user_accounts.csv";
 
-    public AccountManager() {
+    private AccountManager() {
         allAcounts = new ArrayList<Account>();
+    }
+
+    private static AccountManager instance;
+
+    public static AccountManager getInstance() throws Exception {
+        if(instance == null) {
+            instance = new AccountManager();
+            instance.loadAccounts();
+        }
+        return instance;
     }
 
     // Returns account on successful login, throws exception otherwise

@@ -17,9 +17,27 @@ public class TicketManager {
     String activeTicketsDataPath = "src/programLogic/data/ticketsData.csv";
     String archivedTicketsDataPath = "src/programLogic/data/archivedTicketsData.csv";
 
+    private static TicketManager instance;
+
+    public static TicketManager getInstance() throws Exception {
+        if(instance == null) {
+            instance = new TicketManager(AccountManager.getInstance());
+            instance.initializeData();
+        }
+        return instance;
+    }
+
     private int currentIDNumber;
 
-    public TicketManager(AccountManager accountManager) {
+    public ArrayList<Ticket> getActiveTickets() {
+        return activeTickets;
+    }
+
+    public ArrayList<Ticket> getArchivedTickets() {
+        return archivedTickets;
+    }
+
+    private TicketManager(AccountManager accountManager) {
         this.accountManager = accountManager;
         activeTickets = new ArrayList<Ticket>();
         archivedTickets = new ArrayList<Ticket>();
@@ -124,7 +142,7 @@ public class TicketManager {
         String[] splitLine = line.split("(?<!\\\\),");
         int ticketId = Integer.parseInt(splitLine[0]);
         Account user = accountManager.findAccount(Integer.parseInt(splitLine[1])); // make this the Account finder based off the name
-        AdminAccount assignedTo = accountManager.findAdminAccount(Integer.parseInt(splitLine[1])) ; // make 2nd null the Admin account based on Name
+        AdminAccount assignedTo = accountManager.findAdminAccount(Integer.parseInt(splitLine[2])) ; // make 2nd null the Admin account based on Name
         String shortDesc = splitLine[3];
         String longDesc = splitLine[4];
         Status ticketStatus = Status.parseInt(splitLine[5]);
