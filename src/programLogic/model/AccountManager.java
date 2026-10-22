@@ -44,7 +44,7 @@ public class AccountManager {
         throw new Exception("User not found.");
     }
 
-    private void saveAccounts() {
+    public void saveAccounts() {
         try(FileWriter fw = new FileWriter(accountDataPath);) {
             for(Account acc : allAcounts) {
                 fw.write(String.format("%s,%s,%s,%d,%s\n",
@@ -89,6 +89,7 @@ public class AccountManager {
             return false;
         }
         account.setPassword(newPassword);
+        saveAccounts();
         return true;
     }
 

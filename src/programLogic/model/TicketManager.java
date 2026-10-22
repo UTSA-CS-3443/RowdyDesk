@@ -59,8 +59,8 @@ public class TicketManager {
 
     private void addArchivedTicket(Ticket ticket) { archivedTickets.add(ticket); }
 
-    public Ticket createTicket(Account userName, String shortDescription, String longDescription) {
-        Ticket newTicket = new Ticket(currentIDNumber, userName, null, shortDescription, longDescription, Status.UNASSIGNED,new Date());
+    public Ticket createTicket(Account user, String shortDescription, String longDescription) {
+        Ticket newTicket = new Ticket(currentIDNumber, user, null, shortDescription, longDescription, Status.UNASSIGNED,new Date());
         currentIDNumber += 1;
 
         addTicket(newTicket);
@@ -202,7 +202,7 @@ public class TicketManager {
                     ticket.user.getId(),
                     "9999",
                     ticket.shortDescription,
-                    ticket.longDescription,
+                    ticket.longDescription.replace(",", "\\,"),
                     ticket.getTicketStatus().ordinal(),
                     ticket.getTimeCreated().getTime());
         } else{
@@ -211,7 +211,7 @@ public class TicketManager {
                 ticket.user.getId(),
                 ticket.assignedTo.getId(),
                 ticket.shortDescription,
-                ticket.longDescription,
+                ticket.longDescription.replace(",", "\\,"),
                 ticket.getTicketStatus().ordinal(),
                 ticket.getTimeCreated().getTime());
         }

@@ -117,6 +117,7 @@ public class rowdyDeskCLI {
         } else {
             while (true) {
                 System.out.println("""
+                        
                         Welcome to RowdyDesk! please select an option
                         [1] view your tickets
                         [2] create new ticket
@@ -125,6 +126,7 @@ public class rowdyDeskCLI {
                         """);
 
                 userChoice = scnr.next();
+                scnr.nextLine();
 
                 if (userChoice.equals("1")) {
                     // View tickets
@@ -140,10 +142,47 @@ public class rowdyDeskCLI {
                         System.out.println("___________________________________________");
                     }
                 } else if (userChoice.equals("2")) {
-                    // create ticket
+                    // Create ticket
+                    System.out.print("Enter a brief description (~5 words or less): ");
+                    String shortDesc = scnr.nextLine();
+                    System.out.print("Enter a detailed description (no line breaks): ");
+                    String longDesc = scnr.nextLine();
+                    if(shortDesc.isBlank() || longDesc.isBlank()) {
+                        System.out.println("Error: Neither field can be blank.");
+                    } else {
+                        ticketManager.createTicket(loggedInAccount, shortDesc, longDesc);
+                    }
                 } else if (userChoice.equals("3")) {
-                    // Get valid info
-                    // create with function
+                    // Edit account
+                    System.out.println("""
+                        [1] change username
+                        [2] change display name
+                        [3] change password
+                        [4] cancel
+                        """);
+
+                    userChoice = scnr.nextLine();
+                    System.out.print("Enter new value: ");
+                    String newAttribute = scnr.nextLine();
+
+                    if(newAttribute.isEmpty()) {
+                        System.out.println("Error: Field cannot be blank.");
+                    } else if(userChoice.equals("1")) {
+                        loggedInAccount.setUserName(newAttribute);
+                        System.out.println("Username updated!");
+                    } else if(userChoice.equals("2")) {
+                        loggedInAccount.setDisplayName(newAttribute);
+                        System.out.println("Display name updated!");
+                    } else if(userChoice.equals("3")) {
+                        System.out.print("Enter old password: ");
+                        String oldPass = scnr.nextLine();
+                        if(accountManager.changePassword(loggedInAccount, oldPass, newAttribute)) {
+                            System.out.println("Password updated!");
+                        } else {
+                            System.out.println("Incorrect password.");
+                        }
+                    }
+                    accountManager.saveAccounts();
                 } else if (userChoice.equals("4")) {
                     System.out.println("Thank you for using RowdyDesk!");
                     break;
