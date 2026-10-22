@@ -25,7 +25,7 @@ public class Account {
         this.userName = userName;
     }
 
-    public void setPassword(String password) {
+    protected void setPassword(String password) {
         this.password = password;
     }
 

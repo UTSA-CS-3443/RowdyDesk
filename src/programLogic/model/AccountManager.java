@@ -33,7 +33,7 @@ public class AccountManager {
     // Returns account on successful login, throws exception otherwise
     public Account login(String userName, String password) throws Exception {
         for(Account acc : allAcounts) {
-            if(acc.getUserName().equals(userName.toLowerCase())) {
+            if(acc.getUserName().equalsIgnoreCase(userName)) {
                 if(acc.getPassword().equals(password)) {
                     return acc;
                 } else {
@@ -84,6 +84,14 @@ public class AccountManager {
         saveAccounts();
     }
 
+    public boolean changePassword(Account account,String oldPassword, String newPassword) {
+        if(!account.getPassword().equals(oldPassword)) {
+            return false;
+        }
+        account.setPassword(newPassword);
+        return true;
+    }
+
     public void editAccount(Account newAccountInfo) {
         Account accountToUpdate = findAccount(newAccountInfo.getId());
         allAcounts.set(allAcounts.indexOf(accountToUpdate), newAccountInfo);
@@ -93,6 +101,18 @@ public class AccountManager {
 
     public void deleteAccount(Account account) {
         allAcounts.remove(account);
+
+        saveAccounts();
+    }
+
+    public void elevateToAdmin(Account account) {
+        if(account instanceof AdminAccount) {
+            return;
+        }
+        int index = allAcounts.indexOf(account);
+        allAcounts.remove(account);
+        AdminAccount newAdmin = new AdminAccount(account.getUserName(),account.getDisplayName(), account.getId(),account.getPassword());
+        allAcounts.add(index,newAdmin);
 
         saveAccounts();
     }

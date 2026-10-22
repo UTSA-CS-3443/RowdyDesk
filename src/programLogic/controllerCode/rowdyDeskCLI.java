@@ -68,31 +68,43 @@ public class rowdyDeskCLI {
                 if (userChoice.equals("1")) {
                     // prints out all tickets
                     System.out.println(AdminViewAllTicketsController.viewAllTickets(ticketManager));
+
                 } else if (userChoice.equals("2")) {
                     // prints out tickets that user has
                     System.out.println(AdminViewAllTicketsController.viewAssignedTickets(adminLoggedInAccount));
+
                 } else if (userChoice.equals("3")) {
                     // prompts user and creates a ticket
                     AdminAddTicketController.createTicket(ticketManager,accountManager,adminLoggedInAccount);
+
                 } else if (userChoice.equals("4")) {
                     // prompts user and gives a variety of ticket edit options
                     AdminViewAllTicketsController.editTicket(ticketManager,accountManager);
+
                 } else if (userChoice.equals("5")) {
                     // prompts user for edits to their own account
-                    //
+                    if(AdminManageAccountsController.editOwnAccount(adminLoggedInAccount, accountManager)) {
+                        // they deleted their own account
+                        System.out.println("Account is now deleted! logging out...");
+                    }
+
                 } else if (userChoice.equals("6")) {
                     // prints out all accounts
                     System.out.println(AdminManageAccountsController.viewAllAccounts(accountManager));
+
                 } else if (userChoice.equals("7")) {
                     // searches for an account
                     AdminManageAccountsController.editAccount(accountManager);
+
                 } else if (userChoice.equals("8")) {
                     // Straight up creates an account
                    AdminManageAccountsController.createAccount(accountManager);
+
                 } else if (userChoice.equals("9")) {
                     // can you guess what this does?
                     System.out.println("Thank you for using RowdyDeskAdmin!");
                     break;
+
                 } else {
                     System.out.println("Please enter a valid command!");
                 }

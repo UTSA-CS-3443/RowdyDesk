@@ -36,7 +36,7 @@ public class AdminAddTicketController {
         boolean assignToThisAdmin = InputValidator.readBooleanValue("please enter either Yes or No");
 
         if (assignToThisAdmin) {
-            newTicket.setAssignedTo(thisAccount);
+            ticketManager.assignTicket(newTicket, thisAccount);
             System.out.println("Ticket has been assigned to you!");
         }
     }
