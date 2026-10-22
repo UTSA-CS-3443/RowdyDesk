@@ -54,8 +54,13 @@ public class AdminViewAllTicketsController {
             System.out.println("Ticket not found, please try again");
         }
 
-        System.out.println("What would you like to do with ticket: "+ foundTicket.getId());
-        System.out.println("""
+
+
+        int response;
+
+        while(true) {
+            System.out.println("What would you like to do with ticket: "+ foundTicket.getId());
+            System.out.println("""
                         [1] Edit Short Description and User
                         [2] Add Work Notes
                         [3] Reassign ticket
@@ -64,9 +69,6 @@ public class AdminViewAllTicketsController {
                         [6] delete Ticket
                         [7] Do nothing and quit""");
 
-        int response;
-
-        while(true) {
             response = InputValidator.readIntNumberBetween(1,7,"Please enter a number between 1 and 7");
             if(response == 1) {
                 System.out.println("Please enter the new Short Description");

@@ -2,6 +2,7 @@ package programLogic.controllerCode;
 
 import programLogic.model.AccountManager;
 import programLogic.model.Account;
+import programLogic.model.AdminAccount;
 
 public class AdminManageAccountsController {
 
@@ -76,37 +77,94 @@ public class AdminManageAccountsController {
             System.out.println("Account not found, please try again or enter 0 to cancel");
         }
 
-        System.out.println("What would you like to do with user " + foundAccount.getId());
-        System.out.println("""
+
+
+        int response;
+
+        while(true) {
+            System.out.println("What would you like to do with user " + foundAccount.getUserName());
+            System.out.println("""
                         [1] Edit Username
                         [2] Edit Display Name
                         [3] Elevate to Admin
                         [4] Delete Account
                         [5] Do nothing and quit""");
 
-        int response;
-
-        while(true) {
             response = InputValidator.readIntNumberBetween(1,5, "Please enter a valid number between 1 and 5");
             if (response == 1) {
                 String userName = InputValidator.readString();
                 foundAccount.setUserName(userName);
-                System.out.println("Updated username to" + userName);
+                System.out.println("Updated username to " + userName);
             } else if (response == 2) {
                 String displayName = InputValidator.readString();
                 foundAccount.setDisplayName(displayName);
-                System.out.println("Updated display Name to" + displayName);
+                System.out.println("Updated display Name to " + displayName);
             } else if (response == 3) {
-                //
+                accountManager.elevateToAdmin(foundAccount);
+                System.out.println("Successfully made user into an Admin");
             } else if (response == 4) {
-                //
+                System.out.println("Are you sure your want to delete " + foundAccount.getUserName() + "?");
+                boolean confirm = InputValidator.readBooleanValue("Enter yes or no");
+                if(confirm) {
+                    accountManager.deleteAccount(foundAccount);
+                    System.out.println("Account Deleted");
+                } else {
+                    System.out.println("Account NOT deleted");
+                }
             } else if (response == 5) {
-                //
+                break;
             }
         }
-
-
     }
+
+    public static boolean editOwnAccount(AdminAccount account, AccountManager accountManager) {
+
+        int response;
+        while (true) {
+            System.out.println("What would you like to do with your account, " + account.getUserName() + "?");
+            System.out.println("""
+                [1] Edit Username
+                [2] Edit Display Name
+                [3] Change Password
+                [4] Delete Account
+                [5] Do nothing and quit""");
+            response = InputValidator.readIntNumberBetween(1, 5, "Please enter a valid number between 1 and 5");
+            if (response == 1) {
+                System.out.println("Please enter your new username");
+                String userName = InputValidator.readString();
+                account.setUserName(userName);
+                System.out.println("Updated username to " + userName);
+            } else if (response == 2) {
+                System.out.println("Please enter your new display name");
+                String displayName = InputValidator.readString();
+                account.setDisplayName(displayName);
+                System.out.println("Updated display Name to " + displayName);
+            } else if (response == 3) {
+                System.out.println("Please enter your old password, followed by your new password");
+                String oldPass = InputValidator.readString();
+                String newPass = InputValidator.readString();
+                if (accountManager.changePassword(account, oldPass, newPass)) {
+                    System.out.println("password change successful!");
+                } else {
+                    System.out.println("old password is incorrect");
+                }
+            } else if (response == 4) {
+                System.out.println("Are you sure your want to delete your own account, " + account.getUserName() + "?");
+                boolean confirm = InputValidator.readBooleanValue("Enter yes or no");
+                if (confirm) {
+                    accountManager.deleteAccount(account);
+                    System.out.println("Account Deleted");
+                    return true;
+                } else {
+                    System.out.println("Account NOT deleted");
+                }
+            } else if (response == 5) {
+                return false;
+            }
+
+        }
+    }
+
     // delete account
     public static void deleteAccount(AccountManager accountManager, Account account) {
         accountManager.deleteAccount(account);
