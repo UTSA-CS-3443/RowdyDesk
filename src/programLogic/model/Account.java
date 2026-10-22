@@ -49,6 +49,10 @@ public class Account {
         return tickets;
     }
 
+    public void addTicket(Ticket t) {
+        getTickets().add(t);
+    }
+
     public boolean isAdminAccount() {
         return this instanceof AdminAccount;
     }

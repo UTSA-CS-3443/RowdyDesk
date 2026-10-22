@@ -139,6 +139,7 @@ public class TicketManager {
                  if (newTicket.getAssignedTo() != null) {
                      newTicket.getAssignedTo().addTicket(newTicket);
                  }
+                 newTicket.user.addTicket(newTicket);
             }
         } catch(IOException e) {
             throw new IOException("Active Tickets file cannot be read.");
@@ -187,7 +188,7 @@ public class TicketManager {
         Account user = accountManager.findAccount(Integer.parseInt(splitLine[1])); // make this the Account finder based off the name
         AdminAccount assignedTo = accountManager.findAdminAccount(Integer.parseInt(splitLine[2])) ; // make 2nd null the Admin account based on Name
         String shortDesc = splitLine[3];
-        String longDesc = splitLine[4];
+        String longDesc = splitLine[4].replaceAll("\\\\,", ",");
         Status ticketStatus = Status.parseInt(splitLine[5]);
         Date ticketCreated = new Date(Long.parseLong(splitLine[6]));
 

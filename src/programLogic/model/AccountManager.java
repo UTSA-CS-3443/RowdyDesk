@@ -100,7 +100,7 @@ public class AccountManager {
     public Account findAccount(int id) {
 
         for(Account acc : allAcounts) {
-            if(acc.getId()==id) {
+            if(acc.getId() == id) {
                 return acc;
             }
         }
@@ -119,7 +119,7 @@ public class AccountManager {
     public AdminAccount findAdminAccount(int id) {
 
         for(Account acc : allAcounts) {
-            if(acc.getId()==id && acc instanceof AdminAccount) {
+            if(acc.getId() == id && acc instanceof AdminAccount) {
                 return (AdminAccount)acc;
             }
         }
@@ -129,7 +129,7 @@ public class AccountManager {
     public AdminAccount findAdminAccount(String userName) {
 
         for(Account acc : allAcounts) {
-            if(acc.getUserName().equals(userName)) {
+            if(acc.getUserName().equals(userName) && acc instanceof AdminAccount) {
                 return (AdminAccount)acc;
             }
         }

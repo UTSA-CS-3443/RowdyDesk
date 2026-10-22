@@ -2,6 +2,9 @@ package programLogic.controllerCode;
 
 import programLogic.model.*;
 
+import javax.swing.text.DateFormatter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class rowdyDeskCLI {
@@ -112,8 +115,18 @@ public class rowdyDeskCLI {
                 userChoice = scnr.next();
 
                 if (userChoice.equals("1")) {
-                    //get list of tickets of user
-                    // loop thru and print out
+                    // View tickets
+                    ArrayList<Ticket> tickets = loggedInAccount.getTickets();
+                    System.out.printf("You have %d tickets:\n___________________________________________\n", tickets.size());
+                    for(Ticket t : tickets) {
+                        System.out.printf("%s\n%s | Status: %s\n%s\n",
+                                t.getShortDescription(),
+                                new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(t.getTimeCreated()),
+                                t.getTicketStatus(),
+                                t.getLongDescription()
+                        );
+                        System.out.println("___________________________________________");
+                    }
                 } else if (userChoice.equals("2")) {
                     // create ticket
                 } else if (userChoice.equals("3")) {
