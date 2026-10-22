@@ -57,7 +57,7 @@ public class AdminViewAllTicketsController {
 
 
         int response;
-
+        //TODO when I get to it, just add an option to view the Long Description. Make it the first choice
         while(true) {
             System.out.println("What would you like to do with ticket: "+ foundTicket.getId());
             System.out.println("""
@@ -136,6 +136,7 @@ public class AdminViewAllTicketsController {
                 break;
             } else if (response == 7) {
                 System.out.println("Going back to main screen...\n");
+                return;
             }
         }
     }
