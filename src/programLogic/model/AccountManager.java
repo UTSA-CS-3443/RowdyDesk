@@ -102,6 +102,12 @@ public class AccountManager {
     public void deleteAccount(Account account) {
         allAcounts.remove(account);
 
+        if(account instanceof AdminAccount) {
+            for(Ticket ticket : ((AdminAccount) account).getAssignedTickets()) {
+                ticket.setAssignedTo(null);
+                ticket.setTicketStatus(Status.UNASSIGNED);
+            }
+        }
         saveAccounts();
     }
 

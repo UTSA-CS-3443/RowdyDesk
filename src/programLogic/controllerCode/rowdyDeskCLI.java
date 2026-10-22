@@ -56,7 +56,7 @@ public class rowdyDeskCLI {
                         [1] view all active tickets
                         [2] view tickets assigned to you
                         [3] create new ticket
-                        [4] edit ticket
+                        [4] view and edit ticket
                         [5] edit your account info
                         [6] view all accounts
                         [7] find and manage an account
