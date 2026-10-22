@@ -1,4 +1,4 @@
 package programLogic.controllerCode;
 
-public class userDashboardController {
+public class UserDashboardController {
 }

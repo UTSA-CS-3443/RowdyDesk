@@ -17,6 +17,22 @@ public class Account {
     private String password;
     private ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setTickets(ArrayList<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -31,5 +47,9 @@ public class Account {
     }
     public ArrayList<Ticket> getTickets() {
         return tickets;
+    }
+
+    public boolean isAdminAccount() {
+        return this instanceof AdminAccount;
     }
 }

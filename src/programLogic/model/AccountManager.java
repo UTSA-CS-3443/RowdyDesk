@@ -18,6 +18,10 @@ public class AccountManager {
 
     private static AccountManager instance;
 
+    public ArrayList<Account> getAllAcounts() {
+        return allAcounts;
+    }
+
     public static AccountManager getInstance() throws Exception {
         if(instance == null) {
             instance = new AccountManager();
@@ -44,7 +48,7 @@ public class AccountManager {
         try(FileWriter fw = new FileWriter(accountDataPath);) {
             for(Account acc : allAcounts) {
                 fw.write(String.format("%s,%s,%s,%d,%s\n",
-                        acc instanceof AdminAccount ? "admin" : "user",
+                        acc.isAdminAccount() ? "admin" : "user",
                         acc.getUserName(),
                         acc.getDisplayName(),
                         acc.getId(),
@@ -80,10 +84,32 @@ public class AccountManager {
         saveAccounts();
     }
 
+    public void editAccount(Account newAccountInfo) {
+        Account accountToUpdate = findAccount(newAccountInfo.getId());
+        allAcounts.set(allAcounts.indexOf(accountToUpdate), newAccountInfo);
+
+        saveAccounts();
+    }
+
+    public void deleteAccount(Account account) {
+        allAcounts.remove(account);
+
+        saveAccounts();
+    }
+
     public Account findAccount(int id) {
 
         for(Account acc : allAcounts) {
             if(acc.getId()==id) {
+                return acc;
+            }
+        }
+        return null;
+    }
+    public Account findAccount(String userName) {
+
+        for(Account acc : allAcounts) {
+            if(acc.getUserName().equals(userName)) {
                 return acc;
             }
         }
@@ -94,6 +120,16 @@ public class AccountManager {
 
         for(Account acc : allAcounts) {
             if(acc.getId()==id && acc instanceof AdminAccount) {
+                return (AdminAccount)acc;
+            }
+        }
+        return null;
+    }
+
+    public AdminAccount findAdminAccount(String userName) {
+
+        for(Account acc : allAcounts) {
+            if(acc.getUserName().equals(userName)) {
                 return (AdminAccount)acc;
             }
         }

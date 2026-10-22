@@ -49,35 +49,48 @@ public class rowdyDeskCLI {
 
         String userChoice;
 
-        if(loggedInAccount instanceof AdminAccount) {
+        if(loggedInAccount instanceof AdminAccount adminLoggedInAccount) {
             while (true) {
                 System.out.println("""
                         Welcome to RowdyDeskAdmin! please select an option
                         [1] view all active tickets
                         [2] view tickets assigned to you
                         [3] create new ticket
-                        [4] edit your account info
-                        [5] add new account
-                        [6] quit""");
+                        [4] edit ticket
+                        [5] edit your account info
+                        [6] view all accounts
+                        [7] find and manage an account
+                        [8] add new account
+                        [9] quit""");
 
                 userChoice = scnr.next();
 
                 if (userChoice.equals("1")) {
-                    System.out.println(adminViewAllTicketsController.viewAllTickets(ticketManager));
-
+                    // prints out all tickets
+                    System.out.println(AdminViewAllTicketsController.viewAllTickets(ticketManager));
                 } else if (userChoice.equals("2")) {
-                    //get list of tickets assign to logged in user
-                    // loop thru them and print out
+                    // prints out tickets that user has
+                    System.out.println(AdminViewAllTicketsController.viewAssignedTickets(adminLoggedInAccount));
                 } else if (userChoice.equals("3")) {
-                    // get valid information
-                    // call create ticket
+                    // prompts user and creates a ticket
+                    AdminAddTicketController.createTicket(ticketManager,accountManager,adminLoggedInAccount);
                 } else if (userChoice.equals("4")) {
-                    // get valid information
-                    // swap account info
+                    // prompts user and gives a variety of ticket edit options
+                    AdminViewAllTicketsController.editTicket(ticketManager,accountManager);
                 } else if (userChoice.equals("5")) {
-                    // get valid information
-                    // add account
+                    // prompts user for edits to their own account
+                    //
                 } else if (userChoice.equals("6")) {
+                    // prints out all accounts
+                    System.out.println(AdminManageAccountsController.viewAllAccounts(accountManager));
+                } else if (userChoice.equals("7")) {
+                    // searches for an account
+                    AdminManageAccountsController.editAccount(accountManager);
+                } else if (userChoice.equals("8")) {
+                    // Straight up creates an account
+                   AdminManageAccountsController.createAccount(accountManager);
+                } else if (userChoice.equals("9")) {
+                    // can you guess what this does?
                     System.out.println("Thank you for using RowdyDeskAdmin!");
                     break;
                 } else {
