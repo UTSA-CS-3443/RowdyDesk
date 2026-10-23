@@ -92,6 +92,7 @@ public class TicketManager {
 
     public void addWorkNotesToTicket(Ticket ticket, String worknotes) {
         ticket.setLongDescription(ticket.getLongDescription() + "\n\n" + worknotes);
+        saveDataToFile();
     }
 
     public void resolveTicket(Ticket ticket) {

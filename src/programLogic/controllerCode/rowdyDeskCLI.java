@@ -28,27 +28,28 @@ public class rowdyDeskCLI {
             System.out.println(e.getMessage());
         }
 
-        boolean loggedIn = false;
-        String username;
-        String password;
+        assert accountManager != null;
+        assert ticketManager != null;
+
+        System.out.println("""
+                Would you like to log in or create an account?
+                [1] Log In
+                [2] Create Account
+                [3] Quit""");
+
+        int createAccResponse = InputValidator.readIntNumberBetween(1,3, "Please enter a number between 1 and 3");
 
         Account loggedInAccount = null;
-        while(!loggedIn) {
-            try {
-                System.out.println("Please Enter your Username:");
-                username = scnr.next();
-                System.out.println("Please Enter your Password:");
-                password = scnr.next();
-
-                loggedInAccount = accountManager.login(username,password);
-
-                System.out.println("Successfully logged in! Hello "+username+"!");
-                loggedIn = true;
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+        if(createAccResponse == 1) {
+            loggedInAccount = LoginScreenController.logIn(accountManager);
+        } else if (createAccResponse == 2) {
+            loggedInAccount = LoginScreenController.createAccount(accountManager);
+        } else if (createAccResponse == 3) {
+            System.out.println("Thank you for considering using RowdyDesk!");
+            return;
         }
+
+        assert loggedInAccount != null;
 
         String userChoice;
 
@@ -126,7 +127,7 @@ public class rowdyDeskCLI {
                         """);
 
                 userChoice = scnr.next();
-                //scnr.nextLine();
+                scnr.nextLine();
 
                 if (userChoice.equals("1")) {
                     // View tickets

@@ -80,9 +80,11 @@ public class AccountManager {
         }
     }
 
-    public void register(String displayName, String userName, String password) {
-        allAcounts.add(new Account(currentIDNumber, displayName, userName, password));
+    public Account register(String displayName, String userName, String password) {
+        Account newAccount = new Account(currentIDNumber, displayName, userName, password);
+        allAcounts.add(newAccount);
         saveAccounts();
+        return newAccount;
     }
 
     public boolean changePassword(Account account,String oldPassword, String newPassword) {

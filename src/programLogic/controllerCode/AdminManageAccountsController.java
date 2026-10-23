@@ -92,10 +92,12 @@ public class AdminManageAccountsController {
 
             response = InputValidator.readIntNumberBetween(1,5, "Please enter a valid number between 1 and 5");
             if (response == 1) {
+                System.out.println("Please enter your new Username:");
                 String userName = InputValidator.readString();
                 foundAccount.setUserName(userName);
                 System.out.println("Updated username to " + userName);
             } else if (response == 2) {
+                System.out.println("Please enter your new Display Name:");
                 String displayName = InputValidator.readString();
                 foundAccount.setDisplayName(displayName);
                 System.out.println("Updated display Name to " + displayName);
