@@ -56,15 +56,15 @@ public class rowdyDeskCLI {
             while (true) {
                 System.out.println("""
                         Welcome to RowdyDeskAdmin! please select an option
-                        [1] view all active tickets
-                        [2] view tickets assigned to you
-                        [3] create new ticket
-                        [4] view and edit ticket
-                        [5] edit your account info
-                        [6] view all accounts
-                        [7] find and manage an account
-                        [8] add new account
-                        [9] quit""");
+                        [1] View all active tickets
+                        [2] View you tickets
+                        [3] Create new ticket
+                        [4] View and edit ticket
+                        [5] Edit your account info
+                        [6] View all accounts
+                        [7] Find and manage an account
+                        [8] Add new account
+                        [9] Quit""");
 
                 userChoice = scnr.next();
 
@@ -119,14 +119,14 @@ public class rowdyDeskCLI {
                 System.out.println("""
                         
                         Welcome to RowdyDesk! please select an option
-                        [1] view your tickets
-                        [2] create new ticket
-                        [3] edit your account info
-                        [4] quit
+                        [1] View your tickets
+                        [2] Create new ticket
+                        [3] Edit your account info
+                        [4] Quit
                         """);
 
                 userChoice = scnr.next();
-                scnr.nextLine();
+                //scnr.nextLine();
 
                 if (userChoice.equals("1")) {
                     // View tickets

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Account {
 
-    public Account(String userName, String displayName, int id, String password) {
+    public Account( int id, String displayName, String userName, String password) {
         this.userName = userName;
         this.displayName = displayName;
         this.id = id;

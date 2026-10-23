@@ -57,20 +57,29 @@ public class AdminViewAllTicketsController {
 
 
         int response;
-        //TODO when I get to it, just add an option to view the Long Description. Make it the first choice
         while(true) {
             System.out.println("What would you like to do with ticket: "+ foundTicket.getId());
             System.out.println("""
-                        [1] Edit Short Description and User
-                        [2] Add Work Notes
-                        [3] Reassign ticket
-                        [4] Resolve Ticket
-                        [5] Re-open Ticket
-                        [6] delete Ticket
-                        [7] Do nothing and quit""");
+                        [1] View All Ticket Details
+                        [2] Edit Short Description and User
+                        [3] Add Work Notes
+                        [4] Reassign ticket
+                        [5] Resolve Ticket
+                        [6] Re-open Ticket
+                        [7] delete Ticket
+                        [8] Do nothing and quit""");
 
-            response = InputValidator.readIntNumberBetween(1,7,"Please enter a number between 1 and 7");
+            response = InputValidator.readIntNumberBetween(1,8,"Please enter a number between 1 and 8");
             if(response == 1) {
+                System.out.printf("ID: %d | User: %s | Assigned to %s| Status: %s|\nDescription:\n%s\n\n%s\n\n",
+                        foundTicket.getId(),
+                        foundTicket.getUser().getUserName(),
+                        (foundTicket.getAssignedTo() == null) ? "None" : foundTicket.getAssignedTo().getUserName(),
+                        foundTicket.getTicketStatus(),
+                        foundTicket.getShortDescription(),
+                        foundTicket.getLongDescription());
+            }
+            else if(response == 2) {
                 System.out.println("Please enter the new Short Description");
                 String shortDesc = InputValidator.readLine();
 
@@ -96,7 +105,7 @@ public class AdminViewAllTicketsController {
                 ticketManager.editTicket(foundTicket);
                 System.out.println("Ticket successfully updated!");
 
-            } else if (response == 2) {
+            } else if (response == 3) {
                 System.out.println("Add any work notes you like, or leave blank to cancel:");
                 String workNotes = InputValidator.readLine();
                 if(workNotes.isBlank()) {
@@ -104,7 +113,7 @@ public class AdminViewAllTicketsController {
                 }
                 ticketManager.addWorkNotesToTicket(foundTicket,workNotes);
                 System.out.println("Work notes successfully added");
-            } else if (response == 3) {
+            } else if (response == 4) {
                 System.out.println("Please enter the new admin who is assigned to this ticket");
                 AdminAccount admin;
                 while(true) {
@@ -125,16 +134,16 @@ public class AdminViewAllTicketsController {
                 }
                 ticketManager.assignTicket(foundTicket, admin);
                 System.out.println("Ticket Successfully assigned to "+ admin.getUserName());
-            } else if (response == 4) {
+            } else if (response == 5) {
                 ticketManager.resolveTicket(foundTicket);
                 System.out.println("Ticket is Resolved!");
-            } else if (response == 5) {
-                ticketManager.reopenTicket(foundTicket);
             } else if (response == 6) {
+                ticketManager.reopenTicket(foundTicket);
+            } else if (response == 7) {
                 ticketManager.deleteTicket(foundTicket);
                 System.out.println("Ticket successfully deleted!");
                 break;
-            } else if (response == 7) {
+            } else if (response == 8) {
                 System.out.println("Going back to main screen...\n");
                 return;
             }

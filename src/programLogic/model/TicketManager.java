@@ -64,6 +64,7 @@ public class TicketManager {
         currentIDNumber += 1;
 
         addTicket(newTicket);
+        user.addTicket(newTicket);
         saveDataToFile();
         return newTicket;
     }
@@ -135,7 +136,8 @@ public class TicketManager {
             while(f.hasNextLine()) {
                  Ticket newTicket = lineToTicket(f.nextLine());
                  addTicket(newTicket);
-                 currentIDNumber = newTicket.getId() +1;
+
+                 currentIDNumber = (newTicket.getId() >= currentIDNumber) ? newTicket.getId() + 1 : currentIDNumber;
                  if (newTicket.getAssignedTo() != null) {
                      newTicket.getAssignedTo().addTicket(newTicket);
                  }
@@ -152,6 +154,7 @@ public class TicketManager {
             while(f.hasNextLine()) {
                 Ticket newTicket = lineToTicket(f.nextLine());
                 addArchivedTicket(newTicket);
+                currentIDNumber = (newTicket.getId() >= currentIDNumber) ? newTicket.getId() + 1 : currentIDNumber;
                 if (newTicket.getAssignedTo() != null) {
                     newTicket.getAssignedTo().addTicket(newTicket);
                 }
@@ -200,7 +203,7 @@ public class TicketManager {
             return String.format("%d,%d,%s,%s,%s,%d,%d\n",
                     ticket.getId(),
                     ticket.user.getId(),
-                    "9999",
+                    "0000",
                     ticket.shortDescription,
                     ticket.longDescription.replace(",", "\\,"),
                     ticket.getTicketStatus().ordinal(),
@@ -228,9 +231,6 @@ public class TicketManager {
         return activeTickets.size();
     }
 
-    public ArrayList<Ticket> getAssignedTickets(AdminAccount admin) {
-        //TODO Make this loop thru and add shi to the arraylist and then return it
-        return new ArrayList<>();
-    }
+
 
  }

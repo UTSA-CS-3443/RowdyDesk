@@ -3,7 +3,6 @@ package programLogic.model;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,6 +10,7 @@ public class AccountManager {
 
     ArrayList<Account> allAcounts;
     String accountDataPath = "src/programLogic/data/user_accounts.csv";
+    int currentIDNumber;
 
     private AccountManager() {
         allAcounts = new ArrayList<Account>();
@@ -47,11 +47,11 @@ public class AccountManager {
     public void saveAccounts() {
         try(FileWriter fw = new FileWriter(accountDataPath);) {
             for(Account acc : allAcounts) {
-                fw.write(String.format("%s,%s,%s,%d,%s\n",
-                        acc.isAdminAccount() ? "admin" : "user",
-                        acc.getUserName(),
-                        acc.getDisplayName(),
+                fw.write(String.format("%d,%s,%s,%s,%s\n",
                         acc.getId(),
+                        acc.isAdminAccount() ? "admin" : "user",
+                        acc.getDisplayName(),
+                        acc.getUserName(),
                         acc.getPassword()
                 ));
             }
@@ -66,11 +66,12 @@ public class AccountManager {
             while(f.hasNextLine()) {
                 String[] data = f.nextLine().split(",");
                 if(data.length == 0) continue;
-                if(data[0].equals("admin")) {
-                    allAcounts.add(new AdminAccount(data[1], data[2], Integer.parseInt(data[3]), data[4]));
+                if(data[1].equals("admin")) {
+                    allAcounts.add(new AdminAccount(Integer.parseInt(data[0]), data[2], data[3], data[4]));
                 } else {
-                    allAcounts.add(new Account(data[1], data[2], Integer.parseInt(data[3]), data[4]));
+                    allAcounts.add(new Account(Integer.parseInt(data[0]), data[2], data[3], data[4]));
                 }
+                currentIDNumber = (Integer.parseInt(data[0]) >= currentIDNumber) ? Integer.parseInt(data[0]) + 1 : currentIDNumber;
             }
         } catch(IOException e) {
             throw new IOException("Accounts file cannot be read.");
@@ -79,8 +80,8 @@ public class AccountManager {
         }
     }
 
-    public void register(String userName, String displayName, String password) {
-        allAcounts.add(new Account(userName, displayName, allAcounts.size(), password));
+    public void register(String displayName, String userName, String password) {
+        allAcounts.add(new Account(currentIDNumber, displayName, userName, password));
         saveAccounts();
     }
 
@@ -118,7 +119,7 @@ public class AccountManager {
         }
         int index = allAcounts.indexOf(account);
         allAcounts.remove(account);
-        AdminAccount newAdmin = new AdminAccount(account.getUserName(),account.getDisplayName(), account.getId(),account.getPassword());
+        AdminAccount newAdmin = new AdminAccount(account.getId(), account.getDisplayName(), account.getUserName(), account.getPassword());
         allAcounts.add(index,newAdmin);
 
         saveAccounts();

@@ -8,7 +8,7 @@ public class AdminManageAccountsController {
 
     // view all accounts
     public static String viewAllAccounts(AccountManager accountManager) {
-        String outputString = String.format("|%-10s |%-5s |%-25s |%-25s\n", "ID Num", "Privilege", "Display Name", "User Name");
+        String outputString = String.format("|%-10s |%-5s |%-25s |%-25s\n", "ID Num", "Priv", "Display Name", "User Name");
         outputString += "_________________________________________________________________________________\n";
         for(Account account : accountManager.getAllAcounts()) {
             outputString += String.format("|%-10s |%-5s |%-25s |%-25s|\n",

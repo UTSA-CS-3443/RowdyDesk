@@ -6,8 +6,8 @@ public class AdminAccount extends Account {
 
     private ArrayList<Ticket> assignedTickets;
 
-    public AdminAccount(String userName, String displayName, int id, String password) {
-        super(userName, displayName, id, password);
+    public AdminAccount(int id, String displayName, String userName, String password) {
+        super(id, displayName, userName, password);
         assignedTickets = new ArrayList<Ticket>();
     }
 
