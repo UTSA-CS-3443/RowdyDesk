@@ -2,6 +2,9 @@ package programLogic.controllerCode;
 
 import programLogic.model.*;
 
+/**
+ * Handles administrator ticket views and actions for managing active support tickets.
+ */
 public class AdminViewAllTicketsController {
 
 

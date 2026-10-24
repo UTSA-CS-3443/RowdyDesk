@@ -7,6 +7,9 @@ import programLogic.model.Ticket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * Handles user ticket display and account-management actions.
+ */
 public class UserDashboardController {
 
     public static void viewUserTickets(Account account) {

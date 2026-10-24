@@ -2,6 +2,9 @@ package programLogic.controllerCode;
 
 import java.util.Scanner;
 
+/**
+ * Provides shared console input readers and range-validation helpers.
+ */
 public class InputValidator {
 
     private static final Scanner scanner = new Scanner(System.in);

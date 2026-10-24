@@ -6,6 +6,9 @@ import programLogic.model.AdminAccount;
 import programLogic.model.TicketManager;
 import programLogic.model.Ticket;
 
+/**
+ * Handles the command-line workflow for administrators creating support tickets.
+ */
 public class AdminAddTicketController {
 
     public static void createTicket(TicketManager ticketManager, AccountManager accountManager, AdminAccount thisAccount) {

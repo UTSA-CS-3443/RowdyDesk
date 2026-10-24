@@ -9,6 +9,9 @@ import java.io.IOException;
 
 // test commit hi 2
 // test commit hello from xolobarks
+/**
+ * Starts the JavaFX user interface for the RowdyDesk application.
+ */
 public class rowdyDeskApplication extends Application {
 
     public static void main(String[] args) {

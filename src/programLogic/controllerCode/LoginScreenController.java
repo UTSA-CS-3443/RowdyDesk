@@ -3,6 +3,9 @@ package programLogic.controllerCode;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
 
+/**
+ * Handles console login and account-creation workflows.
+ */
 public class LoginScreenController {
 
     public static Account logIn(AccountManager accountManager) {

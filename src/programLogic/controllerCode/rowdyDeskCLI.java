@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Starts the command-line interface and coordinates RowdyDesk workflows.
+ */
 public class rowdyDeskCLI {
 
     public static void main(String[] args) {

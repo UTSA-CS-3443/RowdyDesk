@@ -4,6 +4,9 @@ import programLogic.model.AccountManager;
 import programLogic.model.Account;
 import programLogic.model.AdminAccount;
 
+/**
+ * Handles administrator actions for viewing, creating, editing, and deleting accounts.
+ */
 public class AdminManageAccountsController {
 
     // view all accounts

@@ -3,6 +3,9 @@ package programLogic.controllerCode;
 import programLogic.model.Account;
 import programLogic.model.TicketManager;
 
+/**
+ * Handles the command-line workflow for users creating support tickets.
+ */
 public class UserAddTicketController {
 
     public static void createTicket(TicketManager ticketManager, Account account) {
