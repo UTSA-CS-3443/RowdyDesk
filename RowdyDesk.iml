@@ -8,5 +8,6 @@
     <orderEntry type="jdk" jdkName="openjdk-27" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="application" />
+    <orderEntry type="library" name="JavaFX" level="project" />
   </component>
 </module>
