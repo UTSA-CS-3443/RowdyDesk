@@ -10,17 +10,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programLogic.controllerCode.LoginScreenController">
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField />
-            <PasswordField />
+            <TextField fx:id="usernameField" />
+            <PasswordField fx:id="passwordField" />
+            <Label fx:id="errorLabel" textFill="RED" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="Create Account" />
-                  <Button mnemonicParsing="false" text="Sign In" />
+                  <Button fx:id="createAccountButton" mnemonicParsing="false" onMouseClicked="#onCreateAccountButtonClicked" text="Create Account" />
+                  <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#onLoginButtonClicked" text="Sign In" />
                </children>
             </HBox>
          </children>

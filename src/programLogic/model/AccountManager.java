@@ -1,5 +1,6 @@
 package programLogic.model;
 
+import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class AccountManager {
     String accountDataPath = "src/programLogic/data/user_accounts.csv";
     int currentIDNumber;
 
-    private AccountManager() {
+    public AccountManager() {
         allAcounts = new ArrayList<Account>();
     }
 
@@ -54,11 +55,11 @@ public class AccountManager {
                 if(acc.getPassword().equals(password)) {
                     return acc;
                 } else {
-                    throw new Exception("Incorrect password.");
+                    throw new LoginException("Incorrect password.");
                 }
             }
         }
-        throw new Exception("User not found.");
+        throw new LoginException("User not found.");
     }
 
     /** Saves all managed accounts to the account data file. */

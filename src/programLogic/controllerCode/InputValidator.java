@@ -25,6 +25,22 @@ public class InputValidator {
         return (number >= from && number <= to);
     }
 
+    public static boolean isValidUsername(String username) {
+        if(!isNumberBetween(username.length(), 3, 16)) return false;
+        for(char c : username.toCharArray()) {
+            if(!(Character.isAlphabetic(c) || Character.isDigit(c) || c == '_')) return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidPassword(String password) {
+        if(!isNumberBetween(password.length(), 8, 64)) return false;
+        for(char c : password.toCharArray()) {
+            if(c == ',') return false;
+        }
+        return true;
+    }
+
     public static char readChar(String errorMessage) {
         return scanner.nextLine().charAt(0);
     }
