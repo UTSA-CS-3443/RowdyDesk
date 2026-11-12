@@ -47,9 +47,9 @@ public class AccountManager {
      * @param userName username to authenticate
      * @param password password to verify
      * @return the matching account
-     * @throws Exception if the user is not found or the password is incorrect
+     * @throws LoginException if the user is not found or the password is incorrect
      */
-    public Account login(String userName, String password) throws Exception {
+    public Account login(String userName, String password) throws LoginException {
         for(Account acc : allAcounts) {
             if(acc.getUserName().equalsIgnoreCase(userName)) {
                 if(acc.getPassword().equals(password)) {

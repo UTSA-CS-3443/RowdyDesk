@@ -14,8 +14,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
+import programLogic.model.AdminAccount;
 
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
 
 
 /**
@@ -72,7 +74,8 @@ public class LoginScreenController {
 
         try {
             Account loginAccount = accountManager.login(username, password);
-            SceneSwitcher.switchScene(event, "/resources/user-dashboard.fxml");
+
+            SceneSwitcher.switchScene(event, loginAccount instanceof AdminAccount ? "/resources/admin-dashboard.fxml" : "/resources/user-dashboard.fxml");
         } catch(Exception e) {
             errorLabel.setText(e.getMessage());
         }
