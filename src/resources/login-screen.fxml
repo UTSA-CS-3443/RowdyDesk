@@ -14,12 +14,16 @@
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="usernameField" />
-            <PasswordField fx:id="passwordField" />
+            <TextField fx:id="usernameField" promptText="Username" />
+            <PasswordField fx:id="passwordField" promptText="Password" />
+            <TextField fx:id="displayNameField" promptText="Display Name (Full Name)" />
+            <TextField fx:id="emailField" layoutX="10.0" layoutY="16.0" promptText="Email" />
+            <TextField fx:id="phoneField" layoutX="10.0" layoutY="61.0" promptText="Phone" />
             <Label fx:id="errorLabel" textFill="RED" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Button fx:id="createAccountButton" mnemonicParsing="false" onMouseClicked="#onCreateAccountButtonClicked" text="Create Account" />
+                  <Button fx:id="cancelCreateAccountButton" layoutX="235.0" layoutY="28.0" mnemonicParsing="false" onMouseClicked="#onCancelCreateAccountButtonClicked" text="Cancel" />
                   <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#onLoginButtonClicked" text="Sign In" />
                </children>
             </HBox>

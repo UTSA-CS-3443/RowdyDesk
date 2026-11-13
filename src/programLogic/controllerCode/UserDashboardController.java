@@ -47,7 +47,6 @@ public class UserDashboardController {
         ticketsListView.getItems().addAll(titles);
     }
 
-
     public static void viewUserTickets(Account account) {
         ArrayList<Ticket> tickets = account.getTickets();
         System.out.printf("You have %d tickets:\n___________________________________________\n", tickets.size());

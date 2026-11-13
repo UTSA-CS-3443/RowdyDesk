@@ -31,10 +31,22 @@ public class LoginScreenController {
     protected PasswordField passwordField;
 
     @FXML
+    protected TextField emailField;
+
+    @FXML
+    protected TextField phoneField;
+
+    @FXML
+    protected TextField displayNameField;
+
+    @FXML
     protected Label errorLabel;
 
     @FXML
     protected Button createAccountButton;
+
+    @FXML
+    protected Button cancelCreateAccountButton;
 
     @FXML
     protected Button loginButton;
@@ -46,12 +58,22 @@ public class LoginScreenController {
         } catch(Exception e) {
             errorLabel.setText(e.getMessage());
         }
+        closeAccountCreation();
     }
 
     @FXML
     protected void onCreateAccountButtonClicked() {
+        if(loginButton.isVisible()) {
+            openAccountCreation();
+            errorLabel.setText("Please fill out the fields.");
+            return;
+        }
+
         String username = usernameField.getText();
         String password = passwordField.getText();
+        String displayName = displayNameField.getText();
+        String email = emailField.getText();
+        String phone = phoneField.getText();
 
         if(!InputValidator.isValidUsername(username)) {
             errorLabel.setText("Invalid username. Usernames should be between 3 and 16 characters and use only uppercase and lowercase letters, numbers, and underscores.");
@@ -62,7 +84,14 @@ public class LoginScreenController {
             return;
         }
 
-        errorLabel.setText("todo make account boy");
+        AccountManager.getInstance().register(username, password, displayName, email, phone, "fakefilepath");
+        errorLabel.setText("Account created! You can now log in.");
+        closeAccountCreation();
+    }
+
+    @FXML
+    protected void onCancelCreateAccountButtonClicked() {
+        closeAccountCreation();
     }
 
     @FXML
@@ -81,6 +110,37 @@ public class LoginScreenController {
             System.out.println(e.getMessage());
             errorLabel.setText(e.getMessage());
         }
+    }
+
+    private void openAccountCreation() {
+        displayNameField.setVisible(true);
+        displayNameField.setManaged(true);
+        emailField.setVisible(true);
+        emailField.setManaged(true);
+        phoneField.setVisible(true);
+        phoneField.setManaged(true);
+
+        cancelCreateAccountButton.setVisible(true);
+        cancelCreateAccountButton.setManaged(true);
+        loginButton.setVisible(false);
+        loginButton.setManaged(false);
+    }
+
+    private void closeAccountCreation() {
+        displayNameField.setVisible(false);
+        displayNameField.setManaged(false);
+        displayNameField.clear();
+        emailField.setVisible(false);
+        emailField.setManaged(false);
+        emailField.clear();
+        phoneField.setVisible(false);
+        phoneField.setManaged(false);
+        phoneField.clear();
+
+        cancelCreateAccountButton.setVisible(false);
+        cancelCreateAccountButton.setManaged(false);
+        loginButton.setVisible(true);
+        loginButton.setManaged(true);
     }
 
     // CLI login
