@@ -17,8 +17,8 @@ public class AdminAccount extends Account {
      * @param userName login username
      * @param password account password
      */
-    public AdminAccount(int id, String displayName, String userName, String password) {
-        super(id, displayName, userName, password);
+    public AdminAccount(int id, String userName, String password, String displayName, String email, String phone, String profilePictureFilePath) {
+        super(id, userName, password, displayName, email, phone, profilePictureFilePath);
         assignedTickets = new ArrayList<Ticket>();
     }
 

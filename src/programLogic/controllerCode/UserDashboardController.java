@@ -1,11 +1,15 @@
 package programLogic.controllerCode;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
 import programLogic.model.Ticket;
 import programLogic.model.TicketManager;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -14,9 +18,33 @@ import java.util.ArrayList;
  */
 public class UserDashboardController {
     @FXML
-    public void initialize() {
+    protected Label nameLabel;
+
+    @FXML
+    protected Label phoneLabel;
+
+    @FXML
+    protected Label emailLabel;
+
+    // TODO ??? what this
+    @FXML
+    protected Label mysteryLabel;
+
+    @FXML
+    protected ListView<String> ticketsListView;
+
+    @FXML
+    protected void initialize() {
         TicketManager.getInstance();
-        System.out.println(AccountManager.getInstance().getLoggedIn().getTickets());
+        Account loggedIn = AccountManager.getInstance().getLoggedIn();
+
+        nameLabel.setText(loggedIn.getDisplayName());
+        phoneLabel.setText(loggedIn.getPhone());
+        emailLabel.setText(loggedIn.getEmail());
+
+        ArrayList<Ticket> tickets = loggedIn.getTickets();
+        ObservableList<String> titles = FXCollections.observableArrayList(tickets.stream().map(Ticket::getShortDescription).toArray(String[]::new));
+        ticketsListView.getItems().addAll(titles);
     }
 
 

@@ -72,12 +72,15 @@ public class AccountManager {
     public void saveAccounts() {
         try(FileWriter fw = new FileWriter(accountDataPath);) {
             for(Account acc : allAcounts) {
-                fw.write(String.format("%d,%s,%s,%s,%s\n",
+                fw.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s\n",
                         acc.getId(),
                         acc.isAdminAccount() ? "admin" : "user",
-                        acc.getDisplayName(),
                         acc.getUserName(),
-                        acc.getPassword()
+                        acc.getPassword(),
+                        acc.getDisplayName(),
+                        acc.getEmail(),
+                        acc.getPhone(),
+                        acc.getProfilePictureFilePath()
                 ));
             }
         } catch(Exception e) {
@@ -97,9 +100,9 @@ public class AccountManager {
                 String[] data = f.nextLine().split(",");
                 if(data.length == 0) continue;
                 if(data[1].equals("admin")) {
-                    allAcounts.add(new AdminAccount(Integer.parseInt(data[0]), data[2], data[3], data[4]));
+                    allAcounts.add(new AdminAccount(Integer.parseInt(data[0]), data[2], data[3], data[4], data[5], data[6], data[7]));
                 } else {
-                    allAcounts.add(new Account(Integer.parseInt(data[0]), data[2], data[3], data[4]));
+                    allAcounts.add(new Account(Integer.parseInt(data[0]), data[2], data[3], data[4], data[5], data[6], data[7]));
                 }
                 currentIDNumber = (Integer.parseInt(data[0]) >= currentIDNumber) ? Integer.parseInt(data[0]) + 1 : currentIDNumber;
             }
@@ -115,8 +118,8 @@ public class AccountManager {
      *
      * @return the newly created account
      */
-    public Account register(String displayName, String userName, String password) {
-        Account newAccount = new Account(currentIDNumber, displayName, userName, password);
+    public Account register(String username, String password, String displayName, String email, String phone, String profilePictureFilePath) {
+        Account newAccount = new Account(currentIDNumber, username, password, displayName, email, phone, profilePictureFilePath);
         allAcounts.add(newAccount);
         saveAccounts();
         return newAccount;
@@ -164,7 +167,7 @@ public class AccountManager {
         }
         int index = allAcounts.indexOf(account);
         allAcounts.remove(account);
-        AdminAccount newAdmin = new AdminAccount(account.getId(), account.getDisplayName(), account.getUserName(), account.getPassword());
+        AdminAccount newAdmin = new AdminAccount(account.getId(), account.getUserName(), account.getPassword(), account.getDisplayName(), account.getEmail(), account.getPhone(), account.getProfilePictureFilePath());
         allAcounts.add(index,newAdmin);
 
         saveAccounts();

@@ -122,7 +122,8 @@ public class LoginScreenController {
         System.out.println("Please create your Password");
         String password = InputValidator.readPassword();
 
-        Account newAccount = accountManager.register(userName, displayName, password);
+        // OLD
+        Account newAccount = accountManager.register(userName, password, displayName,"","","");
         System.out.println("Account successfully created!");
         return newAccount;
     }

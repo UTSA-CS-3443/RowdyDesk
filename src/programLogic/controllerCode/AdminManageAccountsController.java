@@ -37,7 +37,7 @@ public class AdminManageAccountsController {
         System.out.println("Please enter a Password");
         String password = InputValidator.readPassword();
 
-        accountManager.register(userName, displayName, password);
+        //accountManager.register(userName, displayName, password);
     }
 
     // find specific account

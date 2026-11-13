@@ -61,22 +61,22 @@
                <bottom>
                   <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label text="Friendly Dog">
+                        <Label fx:id="nameLabel" text="Friendly Dog">
                            <padding>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </padding>
                         </Label>
-                        <Label text="210-458-5555">
+                        <Label fx:id="phoneLabel" text="210-458-5555">
                            <padding>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </padding>
                         </Label>
-                        <Label text="friendly@dog.com">
+                        <Label fx:id="emailLabel" text="friendly@dog.com">
                            <padding>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </padding>
                         </Label>
-                        <Label text="ETS">
+                        <Label fx:id="mysteryLabel" text="ETS">
                            <padding>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </padding>
@@ -90,7 +90,7 @@
             </BorderPane>
             <VBox prefHeight="303.0" prefWidth="385.0">
                <children>
-                  <ListView prefHeight="258.0" prefWidth="365.0">
+                  <ListView fx:id="ticketsListView" prefHeight="258.0" prefWidth="365.0">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
