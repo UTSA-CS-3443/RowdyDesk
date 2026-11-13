@@ -11,12 +11,15 @@ import java.io.IOException;
 
 public class SceneSwitcher {
     /**
-     * Loads a new Scene from any class.
-     * @param pivot Event used to access its Stage parent
+     * Loads a new Scene from any class and optionally instantiate
+     * its controller's instance
+     *
+     * @param pivot        Event used to access its Stage parent
      * @param fxmlFilename FXML file to load
+     * @return The newly loaded scene's controller
      * @throws IOException On failed file load
      */
-    public static void switchScene(Event pivot, String fxmlFilename) throws IOException {
+    public static Object switchScene(Event pivot, String fxmlFilename) throws IOException {
         FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource(fxmlFilename));
         Parent root = loader.load();
 
@@ -25,5 +28,6 @@ public class SceneSwitcher {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        return loader.getController();
     }
 }

@@ -26,12 +26,15 @@ public class TicketManager {
      * Returns the singleton ticket manager, loading ticket data on first access.
      *
      * @return the shared ticket manager
-     * @throws Exception if account or ticket data cannot be loaded
      */
-    public static TicketManager getInstance() throws Exception {
-        if(instance == null) {
-            instance = new TicketManager(AccountManager.getInstance());
-            instance.initializeData();
+    public static TicketManager getInstance() {
+        try {
+            if (instance == null) {
+                instance = new TicketManager(AccountManager.getInstance());
+                instance.initializeData();
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
         }
         return instance;
     }

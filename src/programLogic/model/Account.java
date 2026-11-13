@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * Represents a RowdyDesk user account and the tickets submitted by that user.
  */
 public class Account {
-
     /**
      * Creates an account with the supplied identity and credentials.
      *

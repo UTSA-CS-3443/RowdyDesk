@@ -24,8 +24,6 @@ import java.io.IOException;
  * Handles console login and account-creation workflows.
  */
 public class LoginScreenController {
-    protected AccountManager accountManager = new AccountManager();
-
     @FXML
     protected TextField usernameField;
 
@@ -44,7 +42,7 @@ public class LoginScreenController {
     @FXML
     public void initialize() {
         try {
-            accountManager.loadAccounts();
+            AccountManager.getInstance();
         } catch(Exception e) {
             errorLabel.setText(e.getMessage());
         }
@@ -73,10 +71,14 @@ public class LoginScreenController {
         String password = passwordField.getText();
 
         try {
-            Account loginAccount = accountManager.login(username, password);
-
-            SceneSwitcher.switchScene(event, loginAccount instanceof AdminAccount ? "/resources/admin-dashboard.fxml" : "/resources/user-dashboard.fxml");
+            AccountManager.getInstance().login(username, password);
+            if(AccountManager.getInstance().getLoggedIn() instanceof AdminAccount) {
+                AdminDashboardController controller = (AdminDashboardController)SceneSwitcher.switchScene(event, "/resources/admin-dashboard.fxml");
+            } else {
+                UserDashboardController controller = (UserDashboardController)SceneSwitcher.switchScene(event,"/resources/user-dashboard.fxml");
+            }
         } catch(Exception e) {
+            System.out.println(e.getMessage());
             errorLabel.setText(e.getMessage());
         }
     }
@@ -96,7 +98,7 @@ public class LoginScreenController {
                 System.out.println("Please Enter your Password:");
                 password = InputValidator.readString();
 
-                loggedInAccount = accountManager.login(username,password);
+                accountManager.login(username,password);
 
                 System.out.println("Successfully logged in! Hello "+username+"!");
                 loggedIn = true;

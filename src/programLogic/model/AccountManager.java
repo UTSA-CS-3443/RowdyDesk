@@ -12,8 +12,9 @@ import java.util.Scanner;
  */
 public class AccountManager {
 
-    ArrayList<Account> allAcounts;
-    String accountDataPath = "src/programLogic/data/user_accounts.csv";
+    private final ArrayList<Account> allAcounts;
+    private Account loggedIn;
+    private final String accountDataPath = "src/programLogic/data/user_accounts.csv";
     int currentIDNumber;
 
     public AccountManager() {
@@ -27,16 +28,21 @@ public class AccountManager {
         return allAcounts;
     }
 
+    public Account getLoggedIn() { return loggedIn; }
+
     /**
      * Returns the singleton account manager, loading account data on first access.
      *
      * @return the shared account manager
-     * @throws Exception if account data cannot be loaded
      */
-    public static AccountManager getInstance() throws Exception {
-        if(instance == null) {
-            instance = new AccountManager();
-            instance.loadAccounts();
+    public static AccountManager getInstance() {
+        try {
+            if (instance == null) {
+                instance = new AccountManager();
+                instance.loadAccounts();
+            }
+        } catch(Exception e) {
+            System.out.println("Error getting AccountManager instance: " + e.getMessage());
         }
         return instance;
     }
@@ -46,14 +52,14 @@ public class AccountManager {
      *
      * @param userName username to authenticate
      * @param password password to verify
-     * @return the matching account
      * @throws LoginException if the user is not found or the password is incorrect
      */
-    public Account login(String userName, String password) throws LoginException {
+    public void login(String userName, String password) throws LoginException {
         for(Account acc : allAcounts) {
             if(acc.getUserName().equalsIgnoreCase(userName)) {
                 if(acc.getPassword().equals(password)) {
-                    return acc;
+                    getInstance().loggedIn = acc;
+                    return;
                 } else {
                     throw new LoginException("Incorrect password.");
                 }

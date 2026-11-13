@@ -1,8 +1,10 @@
 package programLogic.controllerCode;
 
+import javafx.fxml.FXML;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
 import programLogic.model.Ticket;
+import programLogic.model.TicketManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +13,12 @@ import java.util.ArrayList;
  * Handles user ticket display and account-management actions.
  */
 public class UserDashboardController {
+    @FXML
+    public void initialize() {
+        TicketManager.getInstance();
+        System.out.println(AccountManager.getInstance().getLoggedIn().getTickets());
+    }
+
 
     public static void viewUserTickets(Account account) {
         ArrayList<Ticket> tickets = account.getTickets();
