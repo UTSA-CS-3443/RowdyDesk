@@ -75,18 +75,13 @@ public class LoginScreenController {
         String email = emailField.getText();
         String phone = phoneField.getText();
 
-        if(!InputValidator.isValidUsername(username)) {
-            errorLabel.setText("Invalid username. Usernames should be between 3 and 16 characters and use only uppercase and lowercase letters, numbers, and underscores.");
-            return;
+        try {
+            AccountManager.getInstance().register(username, password, displayName, email, phone, "fakefilepath");
+            errorLabel.setText("Account created! You can now log in.");
+            closeAccountCreation();
+        } catch(Exception e) {
+            errorLabel.setText(e.getMessage());
         }
-        if(!InputValidator.isValidPassword(password)) {
-            errorLabel.setText("Invalid password. Passwords should be between 8 and 64 characters and not use commas.");
-            return;
-        }
-
-        AccountManager.getInstance().register(username, password, displayName, email, phone, "fakefilepath");
-        errorLabel.setText("Account created! You can now log in.");
-        closeAccountCreation();
     }
 
     @FXML

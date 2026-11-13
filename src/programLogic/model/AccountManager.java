@@ -1,5 +1,7 @@
 package programLogic.model;
 
+import programLogic.controllerCode.InputValidator;
+
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.FileWriter;
@@ -118,7 +120,22 @@ public class AccountManager {
      *
      * @return the newly created account
      */
-    public Account register(String username, String password, String displayName, String email, String phone, String profilePictureFilePath) {
+    public Account register(String username, String password, String displayName, String email, String phone, String profilePictureFilePath) throws IllegalArgumentException{
+        if(!InputValidator.isValidUsername(username)) {
+            throw new IllegalArgumentException("Invalid username. Usernames should be between 3 and 16 characters and use only uppercase and lowercase letters, numbers, and underscores.");
+        }
+        if(!InputValidator.isValidPassword(password)) {
+            throw new IllegalArgumentException("Invalid password. Passwords should be between 8 and 64 characters and not use commas.");
+        }
+        if(!InputValidator.isValidDisplayName(displayName)) {
+            throw new IllegalArgumentException("Invalid display name. Display names should include at least one space.");
+        }
+        if(!InputValidator.isValidEmail(email)) {
+            throw new IllegalArgumentException("Invalid email. Emails should follow the format ____@___.__");
+        }
+        if(!InputValidator.isValidPhone(phone)) {
+            throw new IllegalArgumentException("Invalid phone number. Phone numbers should follow the format XXX-XXX-XXXX or XXXXXXXXXX");
+        }
         Account newAccount = new Account(currentIDNumber, username, password, displayName, email, phone, profilePictureFilePath);
         allAcounts.add(newAccount);
         saveAccounts();

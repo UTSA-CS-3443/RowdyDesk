@@ -35,11 +35,22 @@ public class InputValidator {
 
     public static boolean isValidPassword(String password) {
         if(!isNumberBetween(password.length(), 8, 64)) return false;
-        for(char c : password.toCharArray()) {
-            if(c == ',') return false;
-        }
+        if(password.indexOf(',') != -1) return false;
         return true;
     }
+
+    public static boolean isValidDisplayName(String displayName) {
+        return displayName.indexOf(' ') != -1;
+    }
+
+    public static boolean isValidEmail(String email) {
+        return email.matches("^.+@.+\\..+$");
+    }
+
+    public static boolean isValidPhone(String phone) {
+        return phone.matches("^[0-9]{3}-[0-9]{3}-[0-9]{4}$") || phone.matches("^[0-9]{10}$");
+    }
+
 
     public static char readChar(String errorMessage) {
         return scanner.nextLine().charAt(0);
