@@ -121,6 +121,9 @@ public class AccountManager {
      * @return the newly created account
      */
     public Account register(String username, String password, String displayName, String email, String phone, String profilePictureFilePath) throws IllegalArgumentException{
+        if(findAccount(username) != null) {
+            throw new IllegalArgumentException("User already exists.");
+        }
         if(!InputValidator.isValidUsername(username)) {
             throw new IllegalArgumentException("Invalid username. Usernames should be between 3 and 16 characters and use only uppercase and lowercase letters, numbers, and underscores.");
         }

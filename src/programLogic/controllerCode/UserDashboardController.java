@@ -6,12 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Pagination;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
 import programLogic.model.Ticket;
 import programLogic.model.TicketManager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Handles user ticket display and account-management actions.
@@ -34,17 +36,26 @@ public class UserDashboardController {
     protected ListView<String> ticketsListView;
 
     @FXML
+    protected Pagination ticketsPagination;
+
+    @FXML
     protected void initialize() {
         TicketManager.getInstance();
         Account loggedIn = AccountManager.getInstance().getLoggedIn();
+        ArrayList<Ticket> tickets = loggedIn.getTickets();
 
         nameLabel.setText(loggedIn.getDisplayName());
         phoneLabel.setText(loggedIn.getPhone());
         emailLabel.setText(loggedIn.getEmail());
 
-        ArrayList<Ticket> tickets = loggedIn.getTickets();
-        ObservableList<String> titles = FXCollections.observableArrayList(tickets.stream().map(Ticket::getShortDescription).toArray(String[]::new));
-        ticketsListView.getItems().addAll(titles);
+        ticketsPagination.setPageCount(Math.max(1, (int)Math.ceil(tickets.size() / 12.0)));
+        ticketsPagination.setPageFactory(page -> {
+            ticketsListView.getItems().clear();
+            List<Ticket> ticketsSlice = tickets.subList(page * 12, Math.min(page * 12 + 12, tickets.size()));
+            ObservableList<String> titles = FXCollections.observableArrayList(ticketsSlice.stream().map(Ticket::getShortDescription).toArray(String[]::new));
+            ticketsListView.getItems().addAll(titles);
+            return ticketsListView;
+        });
     }
 
     public static void viewUserTickets(Account account) {

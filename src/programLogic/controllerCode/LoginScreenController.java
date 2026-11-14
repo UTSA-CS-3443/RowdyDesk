@@ -86,6 +86,7 @@ public class LoginScreenController {
 
     @FXML
     protected void onCancelCreateAccountButtonClicked() {
+        errorLabel.setText("");
         closeAccountCreation();
     }
 
