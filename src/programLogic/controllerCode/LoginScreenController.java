@@ -98,12 +98,11 @@ public class LoginScreenController {
         try {
             AccountManager.getInstance().login(username, password);
             if(AccountManager.getInstance().getLoggedIn() instanceof AdminAccount) {
-                AdminDashboardController controller = (AdminDashboardController)SceneSwitcher.switchScene(event, "/resources/admin-dashboard.fxml");
+                SceneSwitcher.switchScene(event, "/resources/admin-dashboard.fxml");
             } else {
-                UserDashboardController controller = (UserDashboardController)SceneSwitcher.switchScene(event,"/resources/user-dashboard.fxml");
+                SceneSwitcher.switchScene(event,"/resources/user-dashboard.fxml");
             }
         } catch(Exception e) {
-            System.out.println(e.getMessage());
             errorLabel.setText(e.getMessage());
         }
     }

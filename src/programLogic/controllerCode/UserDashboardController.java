@@ -4,9 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Pagination;
+import javafx.scene.input.MouseEvent;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
 import programLogic.model.Ticket;
@@ -33,6 +35,9 @@ public class UserDashboardController {
     protected Label mysteryLabel;
 
     @FXML
+    protected Button newTicketButton;
+
+    @FXML
     protected ListView<String> ticketsListView;
 
     @FXML
@@ -56,6 +61,11 @@ public class UserDashboardController {
             ticketsListView.getItems().addAll(titles);
             return ticketsListView;
         });
+    }
+
+    @FXML
+    protected void onNewTicketButtonClicked(MouseEvent event) {
+        SceneSwitcher.switchScene(event, "/resources/user-add-ticket.fxml");
     }
 
     public static void viewUserTickets(Account account) {

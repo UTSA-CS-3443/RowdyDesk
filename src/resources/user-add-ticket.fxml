@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programLogic.controllerCode.UserAddTicketController">
    <bottom>
       <Label text="RowdyDesk Software WIP" BorderPane.alignment="CENTER" />
    </bottom>
@@ -51,11 +51,11 @@
                   <VBox prefHeight="225.0" prefWidth="259.0">
                      <children>
                         <Label text="Short Description" />
-                        <TextField />
+                        <TextField fx:id="shortDescriptionField" />
                         <Label text="Category" />
-                        <TextField />
+                        <TextField fx:id="categoryField" />
                         <Label text="Type" />
-                        <TextField />
+                        <TextField fx:id="typeField" />
                      </children>
                      <padding>
                         <Insets top="12.0" />
@@ -69,8 +69,8 @@
                   <VBox prefHeight="225.0" prefWidth="240.0">
                      <children>
                         <Label text="Description" />
-                        <TextArea prefHeight="200.0" prefWidth="200.0" />
-                        <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" text="Submit" />
+                        <TextArea fx:id="descriptionField" prefHeight="200.0" prefWidth="200.0" />
+                        <Button fx:id="submitButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onMouseClicked="#onSubmitButtonClicked" text="Submit" />
                      </children>
                   </VBox>
                </children>

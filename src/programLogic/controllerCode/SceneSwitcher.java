@@ -17,11 +17,17 @@ public class SceneSwitcher {
      * @param pivot        Event used to access its Stage parent
      * @param fxmlFilename FXML file to load
      * @return The newly loaded scene's controller
-     * @throws IOException On failed file load
      */
-    public static Object switchScene(Event pivot, String fxmlFilename) throws IOException {
+    public static Object switchScene(Event pivot, String fxmlFilename) {
         FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource(fxmlFilename));
-        Parent root = loader.load();
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            System.out.println("Error loading scene " + fxmlFilename);
+            System.out.println(e.getMessage());
+            return null;
+        }
 
         Stage stage = (Stage)((Node)pivot.getSource()).getScene().getWindow();
 
