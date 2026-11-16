@@ -69,7 +69,7 @@
                   <VBox prefHeight="225.0" prefWidth="240.0">
                      <children>
                         <Label text="Description" />
-                        <TextArea fx:id="descriptionField" prefHeight="200.0" prefWidth="200.0" />
+                        <TextArea fx:id="descriptionField" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
                         <Button fx:id="submitButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onMouseClicked="#onSubmitButtonClicked" text="Submit" />
                      </children>
                   </VBox>

@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
+import programLogic.model.Ticket;
 import programLogic.model.TicketManager;
 
 
@@ -38,6 +39,16 @@ public class UserAddTicketController {
 
         TicketManager.getInstance().createTicket(AccountManager.getInstance().getLoggedIn(), shortDescription, description);
         SceneSwitcher.switchScene(event, "/resources/user-dashboard.fxml");
+    }
+
+    public void loadTicket(int id) {
+        Ticket ticket = TicketManager.getInstance().findTicket(id);
+
+        shortDescriptionField.setText(ticket.getShortDescription());
+        descriptionField.setText(ticket.getLongDescription());
+
+        shortDescriptionField.setEditable(false);
+        descriptionField.setEditable(false);
     }
 
     public static void createTicket(TicketManager ticketManager, Account account) {

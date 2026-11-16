@@ -65,7 +65,18 @@ public class UserDashboardController {
 
     @FXML
     protected void onNewTicketButtonClicked(MouseEvent event) {
-        SceneSwitcher.switchScene(event, "/resources/user-add-ticket.fxml");
+        UserAddTicketController controller = (UserAddTicketController)SceneSwitcher.switchScene(event, "/resources/user-add-ticket.fxml");
+        if(controller != null) controller.loadTicket(1111);
+    }
+
+    @FXML
+    protected void onTicketsListViewClicked(MouseEvent event) {
+        String selectedItem = ticketsListView.getSelectionModel().getSelectedItem();
+        int selectedIndex = ticketsListView.getSelectionModel().getSelectedIndex() + ticketsPagination.getCurrentPageIndex() * 12;
+        if(event.getClickCount() == 2 && selectedItem != null) {
+            UserAddTicketController controller = (UserAddTicketController)SceneSwitcher.switchScene(event, "/resources/user-add-ticket.fxml");
+            controller.loadTicket(AccountManager.getInstance().getLoggedIn().getTickets().get(selectedIndex).getId());
+        }
     }
 
     public static void viewUserTickets(Account account) {
