@@ -67,7 +67,7 @@ public class UserDashboardController {
     @FXML
     protected void onNewTicketButtonClicked(MouseEvent event) {
         UserAddTicketController controller = (UserAddTicketController)SceneSwitcher.switchScene(event, "/resources/user-add-ticket.fxml");
-        if(controller != null) controller.loadTicket(1111);
+        //if(controller != null) controller.loadTicket(1111);
     }
 
     @FXML

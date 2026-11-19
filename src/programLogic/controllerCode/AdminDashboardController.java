@@ -87,6 +87,12 @@ public class AdminDashboardController {
     }
 
     @FXML
+    protected void newTicketPressed() {
+        SceneSwitcher.switchScene((Stage) nameLabel.getScene().getWindow(), "/resources/admin-add-ticket.fxml");
+
+    }
+
+    @FXML
     protected void logoutPressed() {
         SceneSwitcher.switchScene((Stage) nameLabel.getScene().getWindow(), "/resources/login-screen.fxml");
     }

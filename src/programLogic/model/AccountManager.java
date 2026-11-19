@@ -30,6 +30,17 @@ public class AccountManager {
         return allAcounts;
     }
 
+    /** @return all admin accounts currently managed by this instance */
+    public ArrayList<AdminAccount> getAllAdminAccounts() {
+        ArrayList<AdminAccount> adminAccounts = new ArrayList<>();
+
+        for(Account acc : allAcounts) {
+            if(acc.isAdminAccount()) adminAccounts.add((AdminAccount) acc);
+        }
+
+        return adminAccounts;
+    }
+
     public Account getLoggedIn() { return loggedIn; }
 
     /**

@@ -109,4 +109,9 @@ public class Account {
     public boolean isAdminAccount() {
         return this instanceof AdminAccount;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s ID: %d", userName, id);
+    }
 }
