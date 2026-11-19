@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Pagination;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
 import programLogic.model.Ticket;
@@ -137,5 +138,10 @@ public class UserDashboardController {
                 return false;
             }
         }
+    }
+
+    @FXML
+    protected void logoutPressed() {
+        SceneSwitcher.switchScene((Stage) nameLabel.getScene().getWindow(), "/resources/login-screen.fxml");
     }
 }

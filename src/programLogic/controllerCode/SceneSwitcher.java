@@ -36,4 +36,21 @@ public class SceneSwitcher {
         stage.show();
         return loader.getController();
     }
+
+    public static Object switchScene(Stage stage, String fxmlFilename) {
+        FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource(fxmlFilename));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            System.out.println("Error loading scene " + fxmlFilename);
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        return loader.getController();
+    }
 }

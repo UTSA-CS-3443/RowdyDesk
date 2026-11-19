@@ -24,7 +24,7 @@
                   <VBox prefHeight="109.0" prefWidth="286.0">
                      <children>
                         <TextField fx:id="usernameField" promptText="Username" />
-                        <PasswordField fx:id="passwordField" promptText="Password" />
+                        <PasswordField fx:id="passwordField" onKeyPressed="#enterKeyPressed" promptText="Password" />
                         <Label fx:id="errorLabel" textFill="RED" />
                      </children>
                      <padding>

@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import programLogic.model.Account;
@@ -88,6 +90,25 @@ public class LoginScreenController {
     protected void onCancelCreateAccountButtonClicked() {
         errorLabel.setText("");
         closeAccountCreation();
+    }
+
+    @FXML
+    protected void enterKeyPressed(KeyEvent event) {
+        if( event.getCode() == KeyCode.ENTER) {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+
+            try {
+                AccountManager.getInstance().login(username, password);
+                if(AccountManager.getInstance().getLoggedIn() instanceof AdminAccount) {
+                    SceneSwitcher.switchScene(event, "/resources/admin-dashboard.fxml");
+                } else {
+                    SceneSwitcher.switchScene(event,"/resources/user-dashboard.fxml");
+                }
+            } catch(Exception e) {
+                errorLabel.setText(e.getMessage());
+            }
+        }
     }
 
     @FXML
