@@ -1,6 +1,7 @@
 package programLogic.controllerCode;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
@@ -52,6 +54,9 @@ public class LoginScreenController {
 
     @FXML
     protected Button loginButton;
+
+    @FXML
+    protected VBox accountCreationVBox;
 
     @FXML
     public void initialize() {
@@ -95,24 +100,12 @@ public class LoginScreenController {
     @FXML
     protected void enterKeyPressed(KeyEvent event) {
         if( event.getCode() == KeyCode.ENTER) {
-            String username = usernameField.getText();
-            String password = passwordField.getText();
-
-            try {
-                AccountManager.getInstance().login(username, password);
-                if(AccountManager.getInstance().getLoggedIn() instanceof AdminAccount) {
-                    SceneSwitcher.switchScene(event, "/resources/admin-dashboard.fxml");
-                } else {
-                    SceneSwitcher.switchScene(event,"/resources/user-dashboard.fxml");
-                }
-            } catch(Exception e) {
-                errorLabel.setText(e.getMessage());
-            }
+            onLoginButtonClicked(event);
         }
     }
 
     @FXML
-    protected void onLoginButtonClicked(MouseEvent event) {
+    protected void onLoginButtonClicked(Event event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -129,34 +122,13 @@ public class LoginScreenController {
     }
 
     private void openAccountCreation() {
-        displayNameField.setVisible(true);
-        displayNameField.setManaged(true);
-        emailField.setVisible(true);
-        emailField.setManaged(true);
-        phoneField.setVisible(true);
-        phoneField.setManaged(true);
-
-        cancelCreateAccountButton.setVisible(true);
-        cancelCreateAccountButton.setManaged(true);
-        loginButton.setVisible(false);
-        loginButton.setManaged(false);
+        accountCreationVBox.setVisible(true);
+        accountCreationVBox.setManaged(true);
     }
 
     private void closeAccountCreation() {
-        displayNameField.setVisible(false);
-        displayNameField.setManaged(false);
-        displayNameField.clear();
-        emailField.setVisible(false);
-        emailField.setManaged(false);
-        emailField.clear();
-        phoneField.setVisible(false);
-        phoneField.setManaged(false);
-        phoneField.clear();
-
-        cancelCreateAccountButton.setVisible(false);
-        cancelCreateAccountButton.setManaged(false);
-        loginButton.setVisible(true);
-        loginButton.setManaged(true);
+        accountCreationVBox.setVisible(false);
+        accountCreationVBox.setManaged(false);
     }
 
     // CLI login

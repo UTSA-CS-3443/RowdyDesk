@@ -2,6 +2,7 @@ package programLogic.controllerCode;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -78,6 +79,11 @@ public class UserDashboardController {
             UserAddTicketController controller = (UserAddTicketController)SceneSwitcher.switchScene(event, "/resources/user-add-ticket.fxml");
             controller.loadTicket(AccountManager.getInstance().getLoggedIn().getTickets().get(selectedIndex).getId());
         }
+    }
+
+    @FXML
+    protected void onEditAccountButtonClicked(Event event) {
+        SceneSwitcher.switchScene(event, "/resources/edit-account-screen.fxml");
     }
 
     public static void viewUserTickets(Account account) {

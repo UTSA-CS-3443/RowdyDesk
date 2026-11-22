@@ -6,10 +6,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import programLogic.model.AccountManager;
 
 import java.io.IOException;
+import java.util.Stack;
 
 public class SceneSwitcher {
+    public static Stack<String> navigationStack = new Stack<>();
+
     /**
      * Loads a new Scene from any class and optionally instantiate
      * its controller's instance
@@ -19,22 +23,7 @@ public class SceneSwitcher {
      * @return The newly loaded scene's controller
      */
     public static Object switchScene(Event pivot, String fxmlFilename) {
-        FXMLLoader loader = new FXMLLoader(SceneSwitcher.class.getResource(fxmlFilename));
-        Parent root;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            System.out.println("Error loading scene " + fxmlFilename);
-            System.out.println(e.getMessage());
-            return null;
-        }
-
-        Stage stage = (Stage)((Node)pivot.getSource()).getScene().getWindow();
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        return loader.getController();
+        return switchScene((Stage)((Node)pivot.getSource()).getScene().getWindow(), fxmlFilename);
     }
 
     public static Object switchScene(Stage stage, String fxmlFilename) {
@@ -51,6 +40,20 @@ public class SceneSwitcher {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        navigationStack.push(fxmlFilename);
         return loader.getController();
+    }
+
+    public static Object backScene(Event pivot) {
+        if(navigationStack.isEmpty()) {
+            return switchScene(pivot, "/resources/login-screen.fxml");
+        } else {
+            return switchScene(pivot, navigationStack.pop());
+        }
+    }
+
+    public static void logout(Event pivot) {
+        AccountManager.getInstance().logout();
+        while(navigationStack.isEmpty()) backScene(pivot);
     }
 }

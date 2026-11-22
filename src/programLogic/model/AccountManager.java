@@ -81,6 +81,13 @@ public class AccountManager {
         throw new LoginException("User not found.");
     }
 
+    /**
+     * Logs out by removing the logged-in account reference.
+     */
+    public void logout() {
+        getInstance().loggedIn = null;
+    }
+
     /** Saves all managed accounts to the account data file. */
     public void saveAccounts() {
         try(FileWriter fw = new FileWriter(accountDataPath);) {

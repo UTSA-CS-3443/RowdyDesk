@@ -17,7 +17,7 @@ import java.util.List;
  * Provides the administrator dashboard controller entry point.
  */
 public class AdminDashboardController {
-    TicketManager ticketManager;
+    private ArrayList<Ticket> ticketsViewing;
 
     @FXML
     protected Label nameLabel;
@@ -30,60 +30,33 @@ public class AdminDashboardController {
 
     @FXML
     protected void initialize() {
-        ticketManager = TicketManager.getInstance();
         AdminAccount loggedIn = (AdminAccount)AccountManager.getInstance().getLoggedIn();
-
-        ArrayList<Ticket> tickets = loggedIn.getAssignedTickets();
-
         nameLabel.setText("    Logged In As:  " + loggedIn.getDisplayName());
-//        phoneLabel.setText(loggedIn.getPhone());
-//        emailLabel.setText(loggedIn.getEmail());
+
+        ticketsPagination.setPageFactory(page -> {
+            ticketsListView.getItems().clear();
+            List<Ticket> ticketsSlice = ticketsViewing.subList(page * 12, Math.min(page * 12 + 12, ticketsViewing.size()));
+            ObservableList<String> titles = FXCollections.observableArrayList(ticketsSlice.stream().map(Ticket::getShortDescription).toArray(String[]::new));
+            ticketsListView.getItems().addAll(titles);
+            return ticketsListView;
+        });
 
         viewAssignedTickets();
     }
 
     @FXML
     protected void viewAssignedTickets() {
-        AdminAccount loggedIn = (AdminAccount)AccountManager.getInstance().getLoggedIn();
-        ArrayList<Ticket> tickets = loggedIn.getAssignedTickets();
-
-        ticketsPagination.setPageCount(Math.max(1, (int)Math.ceil(tickets.size() / 12.0)));
-        ticketsPagination.setPageFactory(page -> {
-            ticketsListView.getItems().clear();
-            List<Ticket> ticketsSlice = tickets.subList(page * 12, Math.min(page * 12 + 12, tickets.size()));
-            ObservableList<String> titles = FXCollections.observableArrayList(ticketsSlice.stream().map(Ticket::getShortDescription).toArray(String[]::new));
-            ticketsListView.getItems().addAll(titles);
-            return ticketsListView;
-        });
+        updateTicketsListView(((AdminAccount)AccountManager.getInstance().getLoggedIn()).getAssignedTickets());
     }
 
     @FXML
     protected void viewAllTickets() {
-        ArrayList<Ticket> tickets = ticketManager.getActiveTickets();
-
-        ticketsPagination.setPageCount(Math.max(1, (int)Math.ceil(tickets.size() / 12.0)));
-        ticketsPagination.setPageFactory(page -> {
-            ticketsListView.getItems().clear();
-            List<Ticket> ticketsSlice = tickets.subList(page * 12, Math.min(page * 12 + 12, tickets.size()));
-            ObservableList<String> titles = FXCollections.observableArrayList(ticketsSlice.stream().map(Ticket::getShortDescription).toArray(String[]::new));
-            ticketsListView.getItems().addAll(titles);
-            return ticketsListView;
-        });
+        updateTicketsListView(TicketManager.getInstance().getActiveTickets());
     }
 
     @FXML
     protected void viewYourTickets() {
-        AdminAccount loggedIn = (AdminAccount)AccountManager.getInstance().getLoggedIn();
-        ArrayList<Ticket> tickets = loggedIn.getTickets();
-
-        ticketsPagination.setPageCount(Math.max(1, (int)Math.ceil(tickets.size() / 12.0)));
-        ticketsPagination.setPageFactory(page -> {
-            ticketsListView.getItems().clear();
-            List<Ticket> ticketsSlice = tickets.subList(page * 12, Math.min(page * 12 + 12, tickets.size()));
-            ObservableList<String> titles = FXCollections.observableArrayList(ticketsSlice.stream().map(Ticket::getShortDescription).toArray(String[]::new));
-            ticketsListView.getItems().addAll(titles);
-            return ticketsListView;
-        });
+        updateTicketsListView(AccountManager.getInstance().getLoggedIn().getTickets());
     }
 
     @FXML
@@ -95,5 +68,11 @@ public class AdminDashboardController {
     @FXML
     protected void logoutPressed() {
         SceneSwitcher.switchScene((Stage) nameLabel.getScene().getWindow(), "/resources/login-screen.fxml");
+    }
+
+    private void updateTicketsListView(ArrayList<Ticket> newTicketsList) {
+        ticketsViewing = newTicketsList;
+        ticketsPagination.setPageCount(Math.max(1, (int)Math.ceil(ticketsViewing.size() / 12.0)));
+        ticketsPagination.setCurrentPageIndex(0);
     }
 }

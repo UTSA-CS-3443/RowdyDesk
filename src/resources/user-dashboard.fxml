@@ -26,6 +26,7 @@
                      <children>
                         <Button fx:id="newTicketButton" mnemonicParsing="false" onMouseClicked="#onNewTicketButtonClicked" prefHeight="26.0" prefWidth="95.0" text="New Ticket" textFill="RED" />
                         <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Logout" />
+                        <Button layoutX="271.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#onEditAccountButtonClicked" prefHeight="26.0" prefWidth="92.0" text="Edit Account" textFill="RED" />
                      </children>
                   </HBox>
                </items>
