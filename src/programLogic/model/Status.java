@@ -4,7 +4,7 @@ package programLogic.model;
  * Defines the lifecycle states available for a support ticket.
  */
 public enum Status {
-    PENDING, UNASSIGNED, INPROGRESS, RESOLVED, DELETED;
+    PENDING, UNASSIGNED, INPROGRESS, RESOLVED, DELETED, DRAFT;
 
     /**
      * Converts a persisted ordinal value to a ticket status.

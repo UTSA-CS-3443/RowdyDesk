@@ -9,10 +9,21 @@ import javafx.stage.Stage;
 import programLogic.model.AccountManager;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Stack;
 
 public class SceneSwitcher {
     public static Stack<String> navigationStack = new Stack<>();
+
+    private static final Map<String, String> TITLES = Map.of(
+            "/resources/login-screen.fxml", "RowdyDesk - Login Screen",
+            "/resources/edit-account-screen.fxml", "RowdyDesk - Edit Account",
+            "/resources/user-dashboard.fxml", "RowdyDesk - My Tickets",
+            "/resources/user-add-ticket.fxml", "RowdyDesk - New Ticket",
+            "/resources/admin-dash.fxml", "RowdyDesk - Admin - Dashboard",
+            "/resources/admin-add-ticket.fxml", "RowdyDesk - Admin - New Ticket",
+            "/resources/admin-ticket-detail.fxml", "RowdyDesk - Admin - Ticket Details",
+            "/resources/admin-modify-user.fxml", "RowdyDesk - Admin - Modify User");
 
     /**
      * Loads a new Scene from any class and optionally instantiate
@@ -34,10 +45,12 @@ public class SceneSwitcher {
         } catch (IOException e) {
             System.out.println("Error loading scene " + fxmlFilename);
             System.out.println(e.getMessage());
+            e.printStackTrace();
             return null;
         }
 
         Scene scene = new Scene(root);
+        stage.setTitle(TITLES.getOrDefault(fxmlFilename, "RowdyDesk"));
         stage.setScene(scene);
         stage.show();
         navigationStack.push(fxmlFilename);

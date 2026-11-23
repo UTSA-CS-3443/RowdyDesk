@@ -14,80 +14,52 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programLogic.controllerCode.UserDashboardController">
    <bottom>
-      <Label text="RowdyDesk Software WIP" BorderPane.alignment="CENTER" />
+      <Label text="RING! - CS3443 - Fall 2026" BorderPane.alignment="CENTER" />
    </bottom>
-   <top>
-      <VBox prefHeight="80.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <ToolBar prefHeight="40.0" prefWidth="200.0">
-               <items>
-                  <Label text="RowdyDesk" />
-                  <HBox alignment="CENTER" prefHeight="29.0" prefWidth="492.0">
-                     <children>
-                        <Button fx:id="newTicketButton" mnemonicParsing="false" onMouseClicked="#onNewTicketButtonClicked" prefHeight="26.0" prefWidth="95.0" text="New Ticket" textFill="RED" />
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Logout" />
-                        <Button layoutX="271.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#onEditAccountButtonClicked" prefHeight="26.0" prefWidth="92.0" text="Edit Account" textFill="RED" />
-                     </children>
-                  </HBox>
-               </items>
-            </ToolBar>
-         </children>
-      </VBox>
-   </top>
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <top>
-                  <ImageView fitHeight="155.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <VBox prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="155.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/dog.jpg" />
                      </image>
-                     <BorderPane.margin>
-                        <Insets />
-                     </BorderPane.margin></ImageView>
-               </top>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-               <bottom>
-                  <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Label fx:id="nameLabel" text="Friendly Dog">
-                           <padding>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="phoneLabel" text="210-458-5555">
-                           <padding>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="emailLabel" text="friendly@dog.com">
-                           <padding>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                           </padding>
-                        </Label>
-                        <Label text="ETS">
-                           <padding>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                           </padding>
-                        </Label>
-                     </children>
+                  </ImageView>
+                  <Label fx:id="nameLabel" text="Friendly Dog">
                      <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                      </padding>
-                  </VBox>
-               </bottom>
-            </BorderPane>
-            <VBox prefHeight="303.0" prefWidth="385.0">
+                  </Label>
+                  <Label fx:id="phoneLabel" text="210-458-5555">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="emailLabel" text="friendly@dog.com">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <Label text="ETS">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <Button mnemonicParsing="false" onMouseClicked="#onEditAccountButtonClicked" prefHeight="26.0" prefWidth="92.0" text="Edit Profile" textFill="RED" />
+               </children>
+               <padding>
+                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+               </padding>
+            </VBox>
+            <VBox prefWidth="600.0">
                <children>
-                  <ListView fx:id="ticketsListView" onMouseClicked="#onTicketsListViewClicked" prefHeight="258.0" prefWidth="365.0">
+                  <ListView fx:id="ticketsListView" onMouseClicked="#onTicketsListViewClicked">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </ListView>
-                  <Pagination fx:id="ticketsPagination" maxHeight="346.0" minHeight="346.0" pageCount="5" prefHeight="346.0" prefWidth="366.0" />
+                  <Pagination fx:id="ticketsPagination" pageCount="5" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -96,4 +68,29 @@
          </children>
       </HBox>
    </center>
+   <top>
+      <ToolBar prefHeight="45.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <items>
+            <Label text="RowdyDesk">
+               <padding>
+                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+               </padding></Label>
+            <HBox alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="689.0">
+               <children>
+                  <Button fx:id="newTicketButton" mnemonicParsing="false" onMouseClicked="#onNewTicketButtonClicked" prefHeight="26.0" prefWidth="95.0" text="New Ticket">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#logoutPressed" prefHeight="26.0" prefWidth="65.0" text="Logout">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin></Button>
+               </children>
+               <padding>
+                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+               </padding>
+            </HBox>
+         </items>
+      </ToolBar>
+   </top>
 </BorderPane>

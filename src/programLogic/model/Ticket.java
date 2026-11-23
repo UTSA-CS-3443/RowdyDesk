@@ -15,6 +15,8 @@ public class Ticket {
     String longDescription;
     private final Date timeCreated;
 
+    private Account author;
+
     /**
      * Creates a ticket with its requester, assignment, content, status, and creation time.
      */
@@ -74,6 +76,10 @@ public class Ticket {
         return id;
     }
 
+    public static String formatNumber(int id) {
+        return String.format("%05d", id);
+    }
+
     /** @return the ticket creation time */
     public Date getTimeCreated() {
         return timeCreated;
@@ -87,6 +93,14 @@ public class Ticket {
     /** Updates the ticket's lifecycle status. */
     public void setTicketStatus(Status ticketStatus) {
         this.ticketStatus = ticketStatus;
+    }
+
+    public Account getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Account author) {
+        this.author = author;
     }
 
 

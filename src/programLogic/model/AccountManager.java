@@ -177,6 +177,14 @@ public class AccountManager {
         return true;
     }
 
+    public void resetPassword(Account account, String newPassword) throws IllegalArgumentException {
+        if(!InputValidator.isValidPassword(newPassword)) {
+            throw new IllegalArgumentException("Invalid password. Passwords should be between 8 and 64 characters and not use commas.");
+        }
+        account.setPassword(newPassword);
+        saveAccounts();
+    }
+
     /** Replaces a stored account with updated account information and persists it. */
     public void editAccount(Account newAccountInfo) {
         Account accountToUpdate = findAccount(newAccountInfo.getId());
@@ -206,7 +214,37 @@ public class AccountManager {
         int index = allAcounts.indexOf(account);
         allAcounts.remove(account);
         AdminAccount newAdmin = new AdminAccount(account.getId(), account.getUserName(), account.getPassword(), account.getDisplayName(), account.getEmail(), account.getPhone(), account.getProfilePictureFilePath());
+
+        newAdmin.setTickets(account.getTickets());
+        TicketManager.getInstance().relinkAccount(account, newAdmin);
+
         allAcounts.add(index,newAdmin);
+
+        saveAccounts();
+    }
+
+    public void demoteToUser(Account account) {
+        if(!(account instanceof AdminAccount)) {
+            return;
+        }
+        AdminAccount admin = (AdminAccount) account;
+        TicketManager tm = TicketManager.getInstance();
+
+        for(Ticket t : new ArrayList<>(admin.getAssignedTickets())) {
+            Status s = t.getTicketStatus();
+            if(s == Status.INPROGRESS || s == Status.UNASSIGNED || s == Status.PENDING) {
+                tm.assignTicket(t, null);
+            } else {
+                t.setAssignedTo(null);
+            }
+        }
+
+        int index = allAcounts.indexOf(account);
+        allAcounts.remove(account);
+        Account newUser = new Account(account.getId(), account.getUserName(), account.getPassword(), account.getDisplayName(), account.getEmail(), account.getPhone(), account.getProfilePictureFilePath());
+        newUser.setTickets(account.getTickets());
+        tm.relinkAccount(account, newUser);
+        allAcounts.add(index, newUser);
 
         saveAccounts();
     }

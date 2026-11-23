@@ -1,29 +1,34 @@
 package programLogic.controllerCode;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
 import programLogic.model.AdminAccount;
-import programLogic.model.TicketManager;
 import programLogic.model.Ticket;
-
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
+import programLogic.model.TicketManager;
 
 /**
  * Handles the command-line workflow for administrators creating support tickets.
  */
-public class AdminAddTicketController  {
-    TicketManager ticketManager;
-    AccountManager accountManager;
+public class AdminAddTicketController {
+
+    private static final String DASHBOARD = "/resources/admin-dash.fxml";
+
+    private TicketManager ticketManager;
+    private AccountManager accountManager;
+
+    private Ticket currentDraft;
+
+    @FXML
+    protected Label titleLabel;
 
     @FXML
     protected TextField shortDescriptionField;
@@ -51,39 +56,99 @@ public class AdminAddTicketController  {
         ticketManager = TicketManager.getInstance();
         accountManager = AccountManager.getInstance();
 
-        ObservableList<Account> usersList = FXCollections.observableArrayList(accountManager.getAllAcounts());
-        ObservableList<AdminAccount> adminsList = FXCollections.observableList(accountManager.getAllAdminAccounts());
-        adminsList.addFirst(null);
+        category.setItems(FXCollections.observableArrayList(TicketFormOptions.CATEGORIES));
 
-        userSelect.setItems(usersList);
-        adminSelect.setItems(adminsList);
-        category.setItems(FXCollections.observableArrayList(
-                "category 1",
-                "category 2",
-                "category 3",
-                "category 4"
-        ));
-        urgency.setItems(FXCollections.observableArrayList(
-                3,
-                2,
-                1
-        ));
-        urgency.setValue(3);
+        urgency.setItems(FXCollections.observableArrayList(TicketFormOptions.URGENCIES));
+        urgency.setConverter(TicketFormOptions.urgencyConverter());
+        urgency.setValue(TicketFormOptions.DEFAULT_URGENCY);
+
+        userSelect.setItems(FXCollections.observableArrayList(accountManager.getAllAcounts()));
+        userSelect.setConverter(TicketFormOptions.accountConverter());
+
+        adminSelect.setItems(TicketFormOptions.adminChoices());
+        adminSelect.setConverter(TicketFormOptions.adminConverter());
+        adminSelect.setValue(TicketFormOptions.NO_ADMIN);
     }
 
+    public void loadDraft(Ticket draft) {
+        currentDraft = draft;
+        titleLabel.setText("Draft Ticket #" + Ticket.formatNumber(draft.getId()));
+
+        shortDescriptionField.setText(draft.getShortDescription());
+        longDescriptionField.setText(draft.getLongDescription());
+        userSelect.setValue(draft.getUser());
+        adminSelect.setValue(draft.getAssignedTo() == null ? TicketFormOptions.NO_ADMIN : draft.getAssignedTo());
+    }
 
     @FXML
-    public void submitClicked() {
-        if(userSelect.getValue() == null || shortDescriptionField.getText().isBlank() || longDescriptionField.getText().isEmpty() || category.getValue()==null) {
-            errorDisplay.setText("Please fill out all Required fields");
+    protected void submitClicked() {
+        Account openedFor = userSelect.getValue();
+
+        if (openedFor == null
+                || shortDescriptionField.getText().isBlank()
+                || longDescriptionField.getText().isBlank()
+                || category.getValue() == null) {
+            errorDisplay.setText("* - Please fill out all required fields");
             return;
         }
-        Ticket currTicket = ticketManager.createTicket(userSelect.getValue(), shortDescriptionField.getText(), longDescriptionField.getText());
-        if(adminSelect.getValue() != null) ticketManager.assignTicket(currTicket, adminSelect.getValue());
+
+        AdminAccount assignee = selectedAdminOrNull();
+
+        if (currentDraft != null) {
+            ticketManager.submitDraft(currentDraft, openedFor, assignee,
+                    shortDescriptionField.getText(), longDescriptionField.getText());
+        } else {
+            Ticket ticket = ticketManager.createTicket(openedFor,
+                    shortDescriptionField.getText(), longDescriptionField.getText());
+            if (assignee != null) {
+                ticketManager.assignTicket(ticket, assignee);
+            }
+        }
         // TODO: add Urgency and Category
-        SceneSwitcher.switchScene((Stage)errorDisplay.getScene().getWindow(), "/resources/admin-dashboard.fxml");
+
+        goToDashboard();
     }
 
+    @FXML
+    protected void saveDraftClicked() {
+        if (shortDescriptionField.getText().isBlank()) {
+            errorDisplay.setText("Add a short description so you can find this draft later.");
+            return;
+        }
+
+        ticketManager.saveDraft(currentDraft,
+                accountManager.getLoggedIn(),
+                userSelect.getValue(),
+                selectedAdminOrNull(),
+                shortDescriptionField.getText(),
+                longDescriptionField.getText());
+
+        goToDashboard();
+    }
+
+    @FXML
+    protected void discardClicked() {
+        if (currentDraft != null) {
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
+                    TicketFormOptions.discardDraftMessage(currentDraft.getId()),
+                    ButtonType.YES, ButtonType.NO);
+            confirm.setHeaderText(null);
+            if (confirm.showAndWait().orElse(ButtonType.NO) != ButtonType.YES) {
+                return;
+            }
+            ticketManager.discardDraft(currentDraft);
+        }
+        goToDashboard();
+    }
+
+    private AdminAccount selectedAdminOrNull() {
+        AdminAccount chosen = adminSelect.getValue();
+        return (chosen == null || chosen == TicketFormOptions.NO_ADMIN) ? null : chosen;
+    }
+
+    private void goToDashboard() {
+        SceneSwitcher.switchScene((Stage) errorDisplay.getScene().getWindow(), DASHBOARD);
+    }
 //    public static void createTicket(TicketManager ticketManager, AccountManager accountManager, AdminAccount thisAccount) {
 //
 //        System.out.println("Please enter the username of the user");

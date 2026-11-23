@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
+import programLogic.model.Status;
 import programLogic.model.Ticket;
 import programLogic.model.TicketManager;
 import java.text.SimpleDateFormat;
@@ -45,22 +46,26 @@ public class UserDashboardController {
     @FXML
     protected Pagination ticketsPagination;
 
+    private ArrayList<Ticket> shown = new ArrayList<>();
+
     @FXML
     protected void initialize() {
-        TicketManager.getInstance();
         Account loggedIn = AccountManager.getInstance().getLoggedIn();
-        ArrayList<Ticket> tickets = loggedIn.getTickets();
 
         nameLabel.setText(loggedIn.getDisplayName());
         phoneLabel.setText(loggedIn.getPhone());
         emailLabel.setText(loggedIn.getEmail());
 
-        ticketsPagination.setPageCount(Math.max(1, (int)Math.ceil(tickets.size() / 12.0)));
+        shown = new ArrayList<>(TicketManager.getInstance().getDraftsFor(loggedIn));
+        shown.addAll(loggedIn.getTickets());
+
+        ticketsPagination.setPageCount(Math.max(1, (int)Math.ceil(shown.size() / 12.0)));
         ticketsPagination.setPageFactory(page -> {
-            ticketsListView.getItems().clear();
-            List<Ticket> ticketsSlice = tickets.subList(page * 12, Math.min(page * 12 + 12, tickets.size()));
-            ObservableList<String> titles = FXCollections.observableArrayList(ticketsSlice.stream().map(Ticket::getShortDescription).toArray(String[]::new));
-            ticketsListView.getItems().addAll(titles);
+            List<Ticket> slice = shown.subList(Math.min(page * 12, shown.size()), Math.min(page * 12 + 12, shown.size()));
+            ticketsListView.setItems(FXCollections.observableArrayList(
+                    slice.stream()
+                            .map(t -> String.format("#%s   %s   [%s]", Ticket.formatNumber(t.getId()), t.getShortDescription(), t.getTicketStatus()))
+                            .toList()));
             return ticketsListView;
         });
     }
@@ -73,11 +78,18 @@ public class UserDashboardController {
 
     @FXML
     protected void onTicketsListViewClicked(MouseEvent event) {
-        String selectedItem = ticketsListView.getSelectionModel().getSelectedItem();
-        int selectedIndex = ticketsListView.getSelectionModel().getSelectedIndex() + ticketsPagination.getCurrentPageIndex() * 12;
-        if(event.getClickCount() == 2 && selectedItem != null) {
-            UserAddTicketController controller = (UserAddTicketController)SceneSwitcher.switchScene(event, "/resources/user-add-ticket.fxml");
-            controller.loadTicket(AccountManager.getInstance().getLoggedIn().getTickets().get(selectedIndex).getId());
+        int row = ticketsListView.getSelectionModel().getSelectedIndex();
+        if (event.getClickCount() != 2 || row < 0) return;
+
+        Ticket picked = shown.get(ticketsPagination.getCurrentPageIndex() * 12 + row);
+
+        UserAddTicketController form = (UserAddTicketController)SceneSwitcher.switchScene(event, "/resources/user-add-ticket.fxml");
+        if (form == null) return;
+
+        if (picked.getTicketStatus() == Status.DRAFT) {
+            form.loadDraft(picked);
+        } else {
+            form.loadTicket(picked.getId());
         }
     }
 
@@ -148,6 +160,8 @@ public class UserDashboardController {
 
     @FXML
     protected void logoutPressed() {
-        SceneSwitcher.switchScene((Stage) nameLabel.getScene().getWindow(), "/resources/login-screen.fxml");
+        Stage stage = (Stage) nameLabel.getScene().getWindow();
+        AccountManager.getInstance().logout();
+        SceneSwitcher.switchScene(stage, "/resources/login-screen.fxml");
     }
 }

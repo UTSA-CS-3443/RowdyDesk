@@ -1,27 +1,17 @@
 package programLogic.controllerCode;
 
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import programLogic.model.Account;
 import programLogic.model.AccountManager;
 import programLogic.model.AdminAccount;
-
-import javax.security.auth.login.LoginException;
-import java.io.IOException;
 
 
 /**
@@ -112,7 +102,7 @@ public class LoginScreenController {
         try {
             AccountManager.getInstance().login(username, password);
             if(AccountManager.getInstance().getLoggedIn() instanceof AdminAccount) {
-                SceneSwitcher.switchScene(event, "/resources/admin-dashboard.fxml");
+                SceneSwitcher.switchScene(event, "/resources/admin-dash.fxml");
             } else {
                 SceneSwitcher.switchScene(event,"/resources/user-dashboard.fxml");
             }
@@ -122,13 +112,15 @@ public class LoginScreenController {
     }
 
     private void openAccountCreation() {
-        accountCreationVBox.setVisible(true);
-        accountCreationVBox.setManaged(true);
+        accountCreationVBox.setVisible(true);        accountCreationVBox.setManaged(true);
+        cancelCreateAccountButton.setVisible(true);  cancelCreateAccountButton.setManaged(true);
+        loginButton.setVisible(false);               loginButton.setManaged(false);
     }
 
     private void closeAccountCreation() {
-        accountCreationVBox.setVisible(false);
-        accountCreationVBox.setManaged(false);
+        accountCreationVBox.setVisible(false);       accountCreationVBox.setManaged(false);
+        cancelCreateAccountButton.setVisible(false); cancelCreateAccountButton.setManaged(false);
+        loginButton.setVisible(true);                loginButton.setManaged(true);
     }
 
     // CLI login

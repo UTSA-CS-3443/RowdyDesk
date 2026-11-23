@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="programLogic.controllerCode.AdminDashboardController">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <Label text="RowdyDesk - Admin">
+               <padding>
+                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+               </padding></Label>
+            <Label fx:id="nameLabel" prefHeight="17.0" prefWidth="197.0" text="       Logged In as:" textAlignment="RIGHT">
+               <padding>
+                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+               </padding></Label>
+            <HBox alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="432.0">
+               <children>
+                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#logoutPressed" text="Logout">
+                     <HBox.margin>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+               </padding>
+            </HBox>
+        </items>
+      </ToolBar>
+   </top>
+   <bottom>
+      <Label text="RING! - CS3443 - Fall 2026" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <ToolBar orientation="VERTICAL" prefWidth="200.0">
+              <items>
+                <Button mnemonicParsing="false" onAction="#newTicketPressed" prefWidth="200.0" text="New Ticket" />
+                  <Separator prefWidth="200.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Separator>
+                  <Button mnemonicParsing="false" onAction="#viewAssignedTickets" prefWidth="200.0" text="Assigned To You" />
+                  <Button mnemonicParsing="false" onAction="#viewAllTickets" prefWidth="200.0" text="All Tickets" />
+                  <Button mnemonicParsing="false" onAction="#viewUnassignedTickets" prefWidth="200.0" text="Unassigned Tickets" />
+                  <Button mnemonicParsing="false" onAction="#viewDrafts" prefWidth="200.0" text="My Drafts" />
+                  <Separator prefWidth="200.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Separator>
+                  <Button mnemonicParsing="false" onAction="#viewUserList" prefWidth="200.0" text="User List" />
+              </items>
+               <padding>
+                  <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+               </padding>
+            </ToolBar>
+   </left>
+   <center>
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <fx:include fx:id="userView" source="admin-user-list.fxml" />
+            <fx:include fx:id="ticketView" source="admin-ticket-list.fxml" />
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>

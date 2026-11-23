@@ -22,9 +22,11 @@ public class rowdyDeskApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 rowdyDeskApplication.class.getResource("/resources/login-screen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 825, 475);
-        primaryStage.setTitle("Hello!");
+        Scene scene = new Scene(fxmlLoader.load());
+        primaryStage.setTitle("RowdyDesk - Login Screen");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 }
