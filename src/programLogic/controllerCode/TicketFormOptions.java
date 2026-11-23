@@ -14,7 +14,7 @@ public final class TicketFormOptions {
     private TicketFormOptions() { }
 
     public static final List<String> CATEGORIES = List.of(
-            "Account", "Network / Wi-Fi", "Hardware", "Software", "Other");
+            "Account", "Network / Wi-Fi", "Hardware", "Software", "General Issue", "Inquiry");
 
     public static final List<Integer> URGENCIES = List.of(1, 2, 3);
     public static final int DEFAULT_URGENCY = 3;
